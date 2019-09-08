@@ -54,8 +54,8 @@ if ($result->num_rows > 0) {
     
     while($row = $result->fetch_assoc()) {
         
-        $mysem = $row['sem'];
-        $mysec = $row['sec'];
+        $mysem = $row['sem_sec'];
+        $usn = $row['usn'];
         
     }
 }else {
@@ -74,8 +74,8 @@ $result = $conn->query($sql);
     $myname = "$myfname $mylname";
     $recid = 'RS'.get_rand_numbers(14).'';
     
-    $sql = "INSERT INTO tbl_assessment_records (record_id, student_id, student_name, sem, sec, exam_name, exam_id, score, status, next_retake, date)
-VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_id', '0', 'FAIL', '$next_retake', '$today_date')";
+    $sql = "INSERT INTO tbl_assessment_records (record_id, student_id, student_name, sem_sec, usn, exam_name, exam_id, score, status, next_retake, date)
+VALUES ('$recid', '$myid', '$myname', '$mysem', '$usn', '$exam_name', '$exam_id', '0', 'FAIL', '$next_retake', '$today_date')";
     
     if ($conn->query($sql) === TRUE) {
         
@@ -118,6 +118,21 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
         <link href="../assets/css/snack.css" rel="stylesheet" type="text/css"/>
         <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
         <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
+    
+    <style>
+   table {
+    border-collapse: separate;
+    border-spacing: 1em; 
+    background-color: #ccc ;
+       border-radius: 5px ;
+}
+        td{
+             background-color: white ;
+            border-radius: 3px  ;
+        }
+</s
+    
+    </style>
         
     </head>
 	<body <?php if ($ms == "1") { print 'onload="myFunction()"'; } ?>   class="page-header-fixed page-horizontal-bar" >
@@ -240,7 +255,7 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
                     <div class="row">
                                 <div class="panel panel-white">
                                     <div class="panel-body">
-                                        <div class="tabs-below" role="tabpanel">
+                                        <div class="tabs-below" role="tabpanel" style=" width:60% ;float:left ;">
                                        <form action="pages/submit_assessment.php" method="POST" name="quiz" id="quiz_form" >
                                             <div class="tab-content">
 											<?php 
@@ -276,15 +291,22 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
                                             if ($type == "FB") {
 											if ($qno == "1") {
 											print '
-											<div role="tabpanel" class="tab-pane active fade in" id="tab'.$qno.'">
-																						<p><span style="font-size: 18pt"><b>Marks:</b> '.nl2br(htmlentities($posmarks)).'<span></p>
-                                             <p><span style="font-size: 20pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'<span></p>
+											<div role="tabpanel" class="tab-pane active fade in" id="tab'.$qno.'"><script type="text/javascript">  mycolorsYellow(demo".$qno."); </script> 
+																						<p><span style="font-size: 10pt"><b>Marks:</b> '.nl2br(htmlentities($posmarks)).'<span></p>
+                                             <p><span style="font-size: 10pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'<span></p>
                                                                                         ';
                                                                                           if( $imgs == NULL){ }else{
                                                                                           print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" width="250" alt="error" height="250" align="right"/>';
                                                                                           
-                                                                                        }print '
+                                                                                        }
+                                            
+                                              
+                                                  
+                                              echo '<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>' ;
+
+                                                print '
 											 <p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')" class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+                                             
 											 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 											 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
 											 <input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
@@ -294,13 +316,16 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
 											}else{
 											print '
 											<div role="tabpanel" class="tab-pane fade in" id="tab'.$qno.'">
+                                            <script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>
 											<p><span style="font-size: 18pt"><b>Marks:</b> '.nl2br(htmlentities($posmarks)).'<span></p>
-                                             <p><span style="font-size: 20pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'</span></p>
+                                             <p><span style="font-size: 10pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'</span></p>
                                                                                          ';
                                                                                           if( $imgs == NULL){ }else{
                                                                                           print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" width="250" height="250" align="right"/>';
                                                                                           
-                                                                                        }print '
+                                                                                        }
+                                                 echo '<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>' ;
+                                                print '
 											 <p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')"  class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
 											 
 					             <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
@@ -319,8 +344,9 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
 											print '
 											
 											<div role="tabpanel" class="amount_list active fade in" id="tab'.$qno.'">
+                                            <script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>
 											<p><span style="font-size: 18pt"><b>Marks:</b> '.nl2br(htmlentities($posmarks)).'<span></p>
-                                             <p><span style="font-size: 20pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'</span></p>
+                                             <p><span style="font-size: 10pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'</span></p>
                                                  <br>
                                                  <br>
                                                  <br>
@@ -328,14 +354,17 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
                                                                                           if( $imgs == NULL){ }else{
                                                                                           print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" width="250" height="250" align="right"/>';
                                                                                           
-                                                                                        }print '
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+                                                                                        }
+                                                
+                                                 echo '<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>' ;
+                                                print '
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
 											 
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
 											 
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
 											 
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
 											 
 											 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 											 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
@@ -347,21 +376,23 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
 											$van = "tab'.$qno.'";
 											print '
 												<div role="tabpanel" class="amount_list fade in" id="tab'.$qno.'">
+                                                <script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>
 												<p><span style="font-size: 18pt"><b>Marks:</b> '.nl2br(htmlentities($posmarks)).'<span></p>
-												<p><span style="font-size: 20pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'<span></p><br><br><br>
+												<p><span style="font-size: 10pt"><b>'.$qno.'.</b> '.nl2br(htmlentities($qs)).'<span></p><br><br><br>
 											';
 											if( $imgs == NULL){ }else{
 											print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" width="250" height="250" align="right"/>';
 
 											}
+                                                 echo '<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>' ;
 											print '
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
 											 
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+											
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span><label></p>
 											 
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span><label></p>
-											 
-											 <p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 20pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+											 <p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
 											 
 											 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 											 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
@@ -390,15 +421,9 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
                                             <ul class="nav nav-tabs" role="tablist">
 											<?php 
 											include '../database/config.php';
-											$sq = "SELECT t_question from tbl_examinations where exam_id = '$exam_id'";
-													$res = $conn->query($sq);
-													$num = 0;
-													if($res){
-														$val = $res->fetch_assoc();
-														$num = $val['t_question'];
-													}
+											
                                                                                         
-											$sql = "SELECT * FROM tbl_questions WHERE exam_id = '$exam_id' limit $num";
+											$sql = "SELECT * FROM tbl_questions WHERE exam_id = '$exam_id' ORDER BY RAND() LIMIT $num ";
                                             $result = $conn->query($sql);
 
                                             if ($result->num_rows > 0) {
@@ -408,11 +433,15 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
                                             while($row = $result->fetch_assoc()) {             
 																						$total_questions++;
 																						if ($qno == "1") {
-																							
-																							print '<li role="presentation" class="active" ><a id="demo'.$qno.'" href="#tab'.$qno.'" role="tab" style="background-color:yellow" data-toggle="tab">'.$qno.'</a></li>';	
-																						}else{
-																								
-																								print '<li role="presentation" ><a id="demo'.$qno.'" onclick="check(demo'.$qno.')" href="#tab'.$qno.'" role="tab"   data-toggle="tab">'.$qno.'</a></li>';		
+																							if (isset($_POST["an'.$qno.'"])) {
+																									$color = "green";
+																							}
+																							print '<li role="presentation" class="active" ><a id="demoz'.$qno.'" href="#tab'.$qno.'" role="tab"  data-toggle="tab" onclick="check(demo'.$qno.')">'.$qno.'</a></li>';	
+																							}else{
+																								if (isset($_POST["an'.$qno.'"])) {
+																										$color = "green";
+																								}
+																								print '<li role="presentation" ><a id="demoz'.$qno.'" href="#tab'.$qno.'" role="tab"   data-toggle="tab" onclick="check(demo'.$qno.')">'.$qno.'</a></li>';		
 																								}
 
 																						$qno = $qno + 1;
@@ -433,20 +462,85 @@ VALUES ('$recid', '$myid', '$myname', '$mysem', '$mysec', '$exam_name', '$exam_i
 											
                                             </ul>
 											
-
-<!--                                        </div> -->
-                                         <input type="hidden" name="formid" value="<?php echo htmlspecialchars($_SESSION["current_examid"]); ?>" />
+                                              <input type="hidden" name="formid" value="<?php echo htmlspecialchars($_SESSION["current_examid"]); ?>" />
 								<br><input id="btn"  class="btn btn-success" type="submit" value="Submit Assessment" CssClass="noprompt-required" AutoPostBack="true">
 										
+                                        </div> 
+                                       <aside style="float:right;top:-120px ;padding-right:50px ;margin-top:20px ; overflow: scroll; height:500px ;">
+                                                   <div style="margin:5px ;">
+
+                                            <p>Attempted Questions : <span style="background-color:#4BB543 ;margin:5px ;width:30px ;height:30px ;color:#4BB543 ;border:1px solid black ;">*</span></p> 
+                                            <p>Visited But Not Attempted  : <span style="background-color:#ffcc00 ;width:35px ;height:30px ;color:#ffcc00 ;border:1px solid black ;">*</span></p> 
+                                            <p>Not Attempted Questions : <span style="background-color:white ;width:35px ;height:30px ;color:white ;border:1px solid black ;">*</span></p> 
+                                           
+                                           </div>
+                                                    
+                                                 <table class="table table-bordered" style="border-color:#22BAA3">
+                                                     <tr> <th colspan="5" style="background-color:#22BAA3 ;color:white ;text-align:center ;letter-spacing: 2px;" >QUESTION PALLETTE </th> </tr>
+                                                     
+                                                     
+                                                      <tbody>
+                                                          
+                                                        <?php
+                                                            $counter= 1 ;
+                                                            $j =1 ;
+                                                            for($i=1;$i<=$num/5;$i++)
+                                                            {
+                                                           
+                                                                echo "<tr>";
+                                                                for($j=1;$j<=5;$j++)
+                                                                {
+                                                                    
+                                                                    if($counter==1){
+                                                                         print '<td style="background-color: #ffcc00" id="demo'.$counter.'" >'.$counter.'</td>';	
+                                                                        $counter=$counter+1 ;
+                                                                    }
+                                                                    else {
+                                                                        print '<td  id="demo'.$counter.'" >'.$counter.'</td>';	
+                                        
+                                                                    $counter=$counter+1 ;
+                                                                    }
+                                                                    
+                                                                }
+                                                                       
+                                                                echo "</tr>";
+
+                                                            }
+                                                          
+                                                           if($num%5 !=0){
+                                                               $extra=$total_questions%5 ;
+                                                               echo "<tr>";
+                                                                for($j=1;$j<=$extra;$j++)
+                                                                {
+                                                                    
+                                                                   print '<td id="demo'.$counter.'" >'.$counter.'</td>';	
+                                                                    $counter=$counter+1 ;
+                                                                }
+                                                                       
+                                                                echo "</tr>";
+                                                               
+                                                           }
+                                                            
+                                                       ?>
+                                                         
+                                                        
+                                                       
+                                                      </tbody>
+                                                </table>
+
+                                           
+                                           
+                                           </aside>
+                                            
 										
 											</form>
 
-/*<?php
+<?php
 if(isset($_POST["an'.$qno.'"])){
 $cc1 = $cc1 + 1;
 
 }
-?>*/
+?>
                                     </div>
                                 </div>  
                     </div>
@@ -480,11 +574,12 @@ $cc1 = $cc1 + 1;
 <script>
     
 function mycolorss(id) {
-		
-    id.setAttribute("style","background-color:green; color:black;");
+    
+    id.setAttribute("style","background-color:#4BB543; color:black;color:white;");
 }
-function check(id){
-		id.setAttribute("style","background-color:yellow; color:black;");
+    
+function check(id) {
+    id.setAttribute("style","background-color:#ffcc00; color:black;");
 }
 </script>
 
@@ -545,8 +640,10 @@ function disable_f5(e)
 $(document).ready(function(){
     $(document).bind("keydown", disable_f5);    
 });
-
+//playing starts here
+var subbutton = false;
 $('#btn').click(function(){
+	if(!subbutton){
 	
 	var c1 = 0;
 	var na ="";
@@ -586,8 +683,8 @@ $('#btn').click(function(){
 	return confirm(c3 + " Question Are Not Answer \n\nAre you sure you want to submit your assessment ?\n ");
 	}
 
-
-});
+	
+}});
 </script>
 
 
@@ -606,6 +703,7 @@ setTimeout("CheckTime()",999);
 function CheckTime(){
 document.getElementById("quiz-time-left").innerHTML='' + max_time + ':' + c_seconds + ' Min' ;
 if(total_seconds <=0){
+	subbutton = true;
 setTimeout('document.quiz.submit()',1);
     
     } else
