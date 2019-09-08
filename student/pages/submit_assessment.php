@@ -42,6 +42,10 @@ if ($final >= $passmark) {
 }else{
     $status = "FAIL";
 }
+
+//echo $final."<br>".$mytotal_marks."<br>".$mynegmarks;
+	
+
 session_start();
 $_SESSION['record_id'] = $record;
 include '../../database/config.php';
