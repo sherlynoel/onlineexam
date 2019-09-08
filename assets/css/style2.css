@@ -1,0 +1,49 @@
+amount_list input {
+  z-index: 999;
+  visibility: hidden;
+  position: absolute;
+}
+label {
+  padding: 10px 20px;
+  border: 1px solid #d50032;
+  cursor: pointer;
+  z-index: 90;
+  border-radius: 5px;
+  background: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #d50032;
+  display: inline-block;
+  float: left;
+  margin: 5px 10px 5px 0;
+}
+amount_list {
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  float: left;
+}
+gift_amount:hover {
+  background: #d50032;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+input:checked + .gift_amount {
+  background: #d50032;
+  border: 1px solid #d50032;
+  opacity: 0 ;
+  border-radius: 5px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+#inputother {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  visibility: visible;
+  padding: 12px 5px;
+  margin: 0 5px;
+}

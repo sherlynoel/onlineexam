@@ -1,0 +1,48 @@
+<?php
+error_reporting(0);
+$total_questions = $_POST['tq'];
+$starting_mark = 1;
+$mytotal_marks = 0;
+$exam_id = $_POST['eid'];
+$record = $_POST['ri'];
+$passm = 0;
+$failm = 0;
+$cnt = 0;
+while ($starting_mark <= $total_questions) {
+if (strtoupper(base64_decode($_POST['ran'.$starting_mark.''])) == strtoupper($_POST['an'.$starting_mark.''])) {
+$mytotal_marks = $mytotal_marks + 1;
+$passm = $passm + 1;	
+$cnt = $cnt + 1;
+}else{
+	$mytotal_marks = $mytotal_marks - 1;
+	$failm = $failm + 1;
+	$cnt = $cnt + 1;
+}
+$starting_mark++;
+}
+
+$percent_score = $passm-($failm * 0.25);
+$pret = floor(($percent_score/$cnt) * 100);
+$passmark = $_POST['pm'];
+
+if ($pret >= $passmark) {
+$status = "PASS";	
+}else{
+$status = "FAIL";	
+}
+
+session_start();
+$_SESSION['record_id'] = $record;
+include '../../database/config.php';
+$sql = "UPDATE tbl_assessment_records SET score='$pret', status='$status' WHERE record_id='$record'";
+
+if ($conn->query($sql) === TRUE) {
+
+	
+   header("location:../assessment-info.php");
+} else {
+   header("location:../assessment-info.php");
+}
+
+$conn->close();
+?>
