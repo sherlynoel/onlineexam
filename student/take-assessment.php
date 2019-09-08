@@ -9,26 +9,26 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 
-    while($row = $result->fetch_assoc()) {
-	$category = $row['category'];
-	$exam_name = $row['exam_name'];
-	$deadline = $row['date'];
-	$duration = $row['duration'];
-	$passmark = $row['passmark'];
-	$reexam = $row['re_exam'];
-	$terms = $row['terms'];
-	$status = $row['status'];
-	$today_date = date('Y/m/d');
-    $next_retake = date('m/d/Y', strtotime($today_date. ' + '.$reexam.' days'));
-	$dcv = date_format(date_create_from_format('m/d/Y', $deadline), 'Y/m/d');
-	
+  while($row = $result->fetch_assoc()) {
+		$category = $row['category'];
+		$exam_name = $row['exam_name'];
+		$deadline = $row['date'];
+		$duration = $row['duration'];
+		$passmark = $row['passmark'];
+		$reexam = $row['re_exam'];
+		$terms = $row['terms'];
+		$status = $row['status'];
+		$today_date = date('Y/m/d');
+		$next_retake = date('m/d/Y', strtotime($today_date. ' + '.$reexam.' days'));
+		$dcv = date_format(date_create_from_format('m/d/Y', $deadline), 'Y/m/d');
 
-	if ($status == "Inactive") {
+
+		if ($status == "Inactive") {
+			header("location:./");	
+		}
+  }
+}else{
 	header("location:./");	
-	}
-    }
-} else {
-header("location:./");	
 }
 $quest = 0;
 $mark = 0;	
@@ -51,21 +51,21 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 
-    while($row = $result->fetch_assoc()) {
-    $record_found = 1;
-	$score = $row['score'];
-	$status = $row['status'];
-	$take_date = $row['date'];
-	$retake_date = $row['next_retake'];
-	$today_date = date('Y/m/d');
-	$retakeconv = date_format(date_create_from_format('m/d/Y', $retake_date), 'Y/m/d');
-    $tc = strtotime($today_date);
-	$rc = strtotime($retakeconv);
-	$dc = strtotime($dcv);
-    $td = ($tc - $rc)/86400;
-	$dcc = ($tc - $dc)/86400;
-	
-    }
+  while($row = $result->fetch_assoc()) {
+		$record_found = 1;
+		$score = $row['score'];
+		$status = $row['status'];
+		$take_date = $row['date'];
+		$retake_date = $row['next_retake'];
+		$today_date = date('Y/m/d');
+		$retakeconv = date_format(date_create_from_format('m/d/Y', $retake_date), 'Y/m/d');
+		$tc = strtotime($today_date);
+		$rc = strtotime($retakeconv);
+		$dc = strtotime($dcv);
+		$td = ($tc - $rc)/86400;
+		$dcc = ($tc - $dc)/86400;
+
+  }
 } else {
     
 }
