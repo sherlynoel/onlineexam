@@ -10,7 +10,7 @@ $exam_id = $_POST['eid'];
 $record = $_POST['ri'];
 $t_mark = $_POST['ttm'];
 $t_question = $_POST['tom'];
-$pre = $_POST['pre'];
+//$pre = $_POST['pre'];
 $cans = 0;
 $wans = 0;
 $skipped = 0;
@@ -35,7 +35,8 @@ while ($starting_mark <= $total_questions) {
 
 $final = (float)($mytotal_marks + $mynegmarks);
 $passmark = $_POST['pm'];
-	
+
+$perc = (float)($final/$t_mark)*100;
 
 if ($final >= $passmark) {
     $status = "PASS";
@@ -49,7 +50,8 @@ if ($final >= $passmark) {
 session_start();
 $_SESSION['record_id'] = $record;
 include '../../database/config.php';
-$sql = "UPDATE tbl_assessment_records SET score='$final', status='$status', c_ans='$cans', f_ans='$wans',skipped='$skipped', total_question='$t_question' WHERE record_id='$record'";
+
+$sql = "UPDATE tbl_assessment_records SET score=$perc, status='$status', c_ans=$cans, f_ans=$wans,skipped=$skipped, total_question=$t_question WHERE record_id='$record'";
 
 if ($conn->query($sql) === TRUE) {
     
@@ -57,6 +59,7 @@ if ($conn->query($sql) === TRUE) {
     header("location:../assessment-info.php");
 } else {
     header("location:../assessment-info.php");
+	
 }
 
 $conn->close();

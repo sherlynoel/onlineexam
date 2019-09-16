@@ -267,7 +267,7 @@ header("location:./");
                                                
                                                <tr>
                                                    <th scope="row">5</th>
-                                                   <td>Pass Mark</td>
+                                                   <td>Pass Percentage</td>
                                                    <td><b><?php echo "$passmark"; ?></b></td>
                                                </tr>
                                               

@@ -23,7 +23,7 @@ header("location:../examinations.php?rp=1185");
     }
 } else {
 
-$sql = "UPDATE tbl_examinations SET category = '$category', exam_name = '$exam', date = '$date', duration = '$duration', passmark = '$passmark', t_mark = '$t_mark', t_question = '$t_question', re_exam = '$attempts', terms = '$terms', pret = '$pre' WHERE exam_id='$exam_id'";
+$sql = "UPDATE tbl_examinations SET category = '$category', exam_name = '$exam', duration = '$duration', passmark = '$passmark', t_mark = '$t_mark', t_question = '$t_question', terms = '$terms' WHERE exam_id='$exam_id'";
 
 if ($conn->query($sql) === TRUE) {
 header("location:../examinations.php?rp=7823&eid=$exam_id");

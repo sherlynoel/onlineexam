@@ -7,10 +7,10 @@ $exam = ucwords(mysqli_real_escape_string($conn, $_POST['exam']));
 $duration = mysqli_real_escape_string($conn, $_POST['duration']);
 $passmark = mysqli_real_escape_string($conn, $_POST['passmark']);
 $t_mark = mysqli_real_escape_string($conn, $_POST['t_mark']);
-$e_mark = mysqli_real_escape_string($conn, $_POST['e_mark']);
+//$e_mark = mysqli_real_escape_string($conn, $_POST['e_mark']);
 $t_question = mysqli_real_escape_string($conn, $_POST['t_question']);
-$pre = mysqli_real_escape_string($conn, $_POST['pre']);
-$attempts = mysqli_real_escape_string($conn, $_POST['attempts']);
+//$pre = mysqli_real_escape_string($conn, $_POST['pre']);
+//$attempts = mysqli_real_escape_string($conn, $_POST['attempts']);
 $date = mysqli_real_escape_string($conn, $_POST['date']);
 $depart = mysqli_real_escape_string($conn, $_POST['department']);
 $category = mysqli_real_escape_string($conn, $_POST['category']);
@@ -22,17 +22,23 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
     while($row = $result->fetch_assoc()) {
-header("location:../examinations.php?rp=1185");
+	header("location:../examinations.php?rp=1185");
     }
 } else {
 
-$sql = "INSERT INTO tbl_examinations (exam_id, category, department, exam_name, date, duration, passmark, t_mark, e_mark, t_question, re_exam, terms, pret)
-VALUES ('$exam_id', '$category', '$depart', '$exam', '$date', '$duration', '$passmark', '$t_mark', '$e_mark', '$t_question', '$attempts', '$terms', '$pre')";
 
-if ($conn->query($sql) === TRUE) {
+/*echo $exam_id."<br>".$exam."<br>".$duration."<br>".$passmark."<br>".$t_mark."<br>".$t_question."<br>".$date."<br>".$depart."<br>".$category."<br>".$terms;*/
+
+$sql = "INSERT INTO tbl_examinations (exam_id, category, department, exam_name, duration, passmark, t_mark, t_question, terms) VALUES ('$exam_id', '$category', '$depart', '$exam',  '$duration', '$passmark', '$t_mark', '$t_question', '$terms')";
+
+
+if (mysqli_query($conn,$sql) === TRUE) {
 header("location:../examinations.php?rp=2932");
+
 } else {
+
 header("location:../examinations.php?rp=7788");
+
 }
 
 

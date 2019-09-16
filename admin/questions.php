@@ -207,6 +207,16 @@ include 'includes/check_reply.php';
                                                 <label for="exampleInputEmail1">Question</label>
                                                 <input type="text" class="form-control" placeholder="Enter question" name="question" required autocomplete="off">
                                                 </div>
+                                                <div class="form-group">
+                                                <label for="exampleInputEmail1">Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1" name="marks" required autocomplete="off">
+                                                
+                                              
+                                                </div>
+                                                <div class="form-group">
+                                                	<label for="exampleInputEmail1">Negative Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 0.25" name="neg_marks" required autocomplete="off">
+																									</div>
 												
                                       <table class="table table-bordered">
                                         <thead>
@@ -271,10 +281,7 @@ include 'includes/check_reply.php';
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="form-group">
-                                                <label for="exampleInputEmail1">Marks alloted</label>
-                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 2 or 5" name="marks" required autocomplete="off">
-                                                </div>
+                                    						
 							
 									 <button type="submit" class="btn btn-primary">Submit</button>
 												
@@ -311,6 +318,16 @@ include 'includes/check_reply.php';
                                                 <label for="exampleInputEmail1">Question</label>
                                                 <input type="text" class="form-control" placeholder="Enter question" name="question" required autocomplete="off">
                                                 </div>
+                                                <div class="form-group">
+                                                <label for="exampleInputEmail1">Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1" name="marks" required autocomplete="off">
+                                                
+                                              
+                                                </div>
+                                                <div class="form-group">
+                                                	<label for="exampleInputEmail1">Negative Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 0.25" name="neg_marks"  autocomplete="off">
+																									</div>
 												<div class="form-group">
                                                 <label for="exampleInputEmail1">Answer</label>
                                                 <input type="text" class="form-control" placeholder="Enter answer" name="answer" required autocomplete="off">
@@ -322,10 +339,7 @@ include 'includes/check_reply.php';
                                                     <input type="file" name="image" accept="image/*" required autocomplete="off">
                                                     </div>
 -->
-                                                    <div class="form-group">
-                                                <label for="exampleInputEmail1">Marks alloted</label>
-                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 2 or 5" name="marks" required autocomplete="off">
-                                                </div>
+                                                    
                                              
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                        </form>

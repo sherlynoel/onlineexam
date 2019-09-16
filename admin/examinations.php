@@ -292,25 +292,24 @@ include 'includes/check_reply.php';
                                     <label for="exampleInputEmail1">Exam Duration (Minutes)</label>
                                     <input type="number" class="form-control" placeholder="Enter exam duration" name="duration" required autocomplete="off">
                                 </div>
+<!--
 				<div class="form-group">
-                                    <label for="exampleInputEmail1">Passmark (%)</label>
+                                    <label for="exampleInputEmail1">Passmark</label>
                                     <input type="number" class="form-control" placeholder="Enter passmark" name="passmark" required autocomplete="off">
                                 </div>
+-->
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Total mark </label>
                                     <input type="number" class="form-control" placeholder="Enter total mark" name="t_mark" required autocomplete="off">
                                 </div>
-                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">each question mark </label>
-                                    <input type="number" class="form-control" placeholder="Enter each question mark" name="e_mark" required autocomplete="off">
-                                </div>
+                                 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">total question </label>
+                                    <label for="exampleInputEmail1">Total question </label>
                                     <input type="number" class="form-control" placeholder="Enter no of question" name="t_question" required autocomplete="off">
                                 </div>
                                  <div class="form-group">
-                                    <label for="exampleInputEmail1">Percentage(%) </label>
-                                    <input type="number" class="form-control" placeholder="Enter the percentage" name="pre" required autocomplete="off">
+                                    <label for="exampleInputEmail1">Pass Percentage(%) </label>
+                                    <input type="number" class="form-control" placeholder="Enter the percentage" name="passmark" required autocomplete="off">
                                 </div>
                                
 				<div class="form-group">

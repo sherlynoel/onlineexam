@@ -17,11 +17,11 @@ if ($result->num_rows > 0) {
 	 $exduration = $row['duration'];
 	 $expassmark = $row['passmark'];
 	 $extmark = $row['t_mark'];
-	 $exemark = $row['e_mark'];
+	 //$exemark = $row['e_mark'];
 	 $t_question = $row['t_question'];
 	 $exreex = $row['re_exam'];
 	 $exterms = $row['terms'];
-	 $pre = $row['pret'];
+	 //$pre = $row['pret'];
     }
 } else {
     header("location:./");
@@ -220,7 +220,7 @@ $conn->close();
                                             <input type="number" class="form-control" value="<?php echo"$exduration"; ?>" placeholder="Enter exam duration" name="duration" required autocomplete="off">
                                         </div>
 										<div class="form-group">
-                                            <label for="exampleInputEmail1">Passmark </label>
+                                            <label for="exampleInputEmail1">Pass Percentage </label>
                                             <input type="number" class="form-control" value="<?php echo"$expassmark"; ?>" placeholder="Enter passmark" name="passmark" required autocomplete="off">
                                         </div>
                                         <div class="form-group">
@@ -231,10 +231,12 @@ $conn->close();
                                             <label for="exampleInputEmail1">total question </label>
                                             <input type="number" class="form-control" value="<?php echo"$t_question"; ?>" placeholder="Enter passmark" name="t_question" required autocomplete="off">
                                         </div>
+<!--
                                          <div class="form-group">
                                             <label for="exampleInputEmail1">percentage(%)</label>
-                                            <input type="number" class="form-control" value="<?php echo"$pre"; ?>" placeholder="Enter percentage" name="pre" required autocomplete="off">
+                                            <input type="number" class="form-control" value="" placeholder="Enter percentage" name="pre" required autocomplete="off">
                                         </div>
+-->
 										
 										
 										

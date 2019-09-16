@@ -7,7 +7,11 @@ $question = mysqli_real_escape_string($conn, $_POST['question']);
 $answer = mysqli_real_escape_string($conn, $_POST['answer']);
 //$image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
 $posmarks = mysqli_real_escape_string($conn, $_POST['marks']);
-$negmarks = (float)$posmarks * -0.25;
+$negmarks = 0;
+if($_POST['neg_marks']){
+	$negmarks = mysqli_real_escape_string($conn, $_POST['neg_marks']);
+	$negmarks= -$negmarks;
+}
 if (isset($_GET['type'])) {
 $question_type = $_GET['type'];	
 if ($question_type == "mc") {	

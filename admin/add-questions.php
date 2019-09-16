@@ -206,6 +206,16 @@ header("location:./");
                                                 <textarea style="resize: none;" rows="4"  class="form-control" placeholder="Enter question" name="question" required autocomplete="off"></textarea>
 
                                                 </div>
+                                                <div class="form-group">
+                                                <label for="exampleInputEmail1">Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1" name="marks" required autocomplete="off">
+                                                
+                                              
+                                                </div>
+                                                <div class="form-group">
+                                                	<label for="exampleInputEmail1">Negative Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 0.25" name="neg_marks" required autocomplete="off">
+																									</div>
 												
                                       <table class="table table-bordered">
                                         <thead>
@@ -270,10 +280,7 @@ header("location:./");
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="form-group">
-                                                <label for="exampleInputEmail1">Marks alloted</label>
-                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 2 or 5" name="marks" required autocomplete="off">
-                                                </div>
+                                    
 									<input type="hidden" name="exam_id" value="<?php echo "$exam_id"; ?>">
 									 <button type="submit" class="btn btn-primary">Submit</button>
 												
@@ -288,6 +295,16 @@ header("location:./");
                                                 <label for="exampleInputEmail1">Question</label>
                                                 <input type="text" class="form-control" placeholder="Enter question" name="question" required autocomplete="off">
                                                 </div>
+                                                <div class="form-group">
+                                                <label for="exampleInputEmail1">Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1" name="marks" required autocomplete="off">
+                                                
+                                              
+                                                </div>
+                                                <div class="form-group">
+                                                	<label for="exampleInputEmail1">Negative Marks</label>
+                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 0.25" name="neg_marks"  autocomplete="off">
+																									</div>
 												<div class="form-group">
                                                 <label for="exampleInputEmail1">Answer</label>
                                                 <input type="text" class="form-control" placeholder="Enter answer" name="answer" required autocomplete="off">
@@ -298,10 +315,7 @@ header("location:./");
                                 <input type="file" name="image" accept="image/*" autocomplete="off">
                                 </div>
 -->
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Marks alloted</label>
-                                                <input type="text" class="form-control" placeholder="Enter marks E.g. 1 or 2 or 5" name="marks" required autocomplete="off">
-                                                </div>
+                                            
                                              
                                          <input type="hidden" name="exam_id" value="<?php echo "$exam_id"; ?>">
                                         <button type="submit" class="btn btn-primary">Submit</button>
