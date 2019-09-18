@@ -34,7 +34,7 @@ header("location:./");
     
 <head>
         
-        <title> MOOC| Take Assessment</title>
+        <title> EXAM | Take Assessment</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
@@ -203,8 +203,8 @@ header("location:./");
 
 											   <tr>
                                                    <th scope="row">3</th>
-                                                   <td>Score</td>
-                                                   <td><?php echo "$score"; ?></td>
+                                                   <td>Percentage</td>
+                                                   <td><?php echo "$score"; ?>%</td>
                                                </tr>
                                                <!--
 											   											<tr>

@@ -16,7 +16,7 @@ $wans = 0;
 $skipped = 0;
 while ($starting_mark <= $total_questions) {
     if (strtoupper(base64_decode($_POST['ran'.$starting_mark.''])) == strtoupper($_POST['an'.$starting_mark.''])) {
-		
+		          
 				$posmarks = (int)strtoupper(base64_decode($_POST['pos'.$starting_mark.'']));
 				
         $mytotal_marks = $mytotal_marks + $posmarks;
@@ -25,6 +25,7 @@ while ($starting_mark <= $total_questions) {
      }else if(!$_POST['an'.$starting_mark.'']){
 				$skipped+=1;
 			}else{
+                // echo strtoupper(base64_decode($_POST['ran'.$starting_mark.'']))."<br>".strtoupper($_POST['an'.$starting_mark.'']);
 				$neg = (float)strtoupper(base64_decode($_POST['neg'.$starting_mark.'']));
         $mynegmarks += $neg;
 				$wans+=1;
@@ -38,14 +39,11 @@ $passmark = $_POST['pm'];
 
 $perc = (float)($final/$t_mark)*100;
 
-if ($final >= $passmark) {
+if ($perc >= $passmark) {
     $status = "PASS";
 }else{
     $status = "FAIL";
 }
-
-//echo $final."<br>".$mytotal_marks."<br>".$mynegmarks;
-	
 
 session_start();
 $_SESSION['record_id'] = $record;

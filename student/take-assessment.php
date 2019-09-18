@@ -268,7 +268,7 @@ header("location:./");
                                                <tr>
                                                    <th scope="row">5</th>
                                                    <td>Pass Percentage</td>
-                                                   <td><b><?php echo "$passmark"; ?></b></td>
+                                                   <td><b><?php echo "$passmark"; ?>%</b></td>
                                                </tr>
                                               
                                            </tbody>
@@ -281,7 +281,7 @@ header("location:./");
                            
                         </div>
 						
-                           <div class="col-md-6">
+												 <div class="col-md-6">
                             <div class="panel panel-white">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Terms and conditions</h3>
@@ -292,7 +292,7 @@ header("location:./");
                             </div>
                         </div>
 						
-						<div class="col-md-6">
+												<div class="col-md-6">
                             <div class="panel panel-white">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Take Assessment</h3>
@@ -331,9 +331,30 @@ header("location:./");
 						
 			
 
-                </div>
+                
+                		</div>
+                		
+                		<div class="row col-md-12">
+                			
+                            <div class="panel panel-white">
+                                <div class="panel-heading" style="text-align:center">
+                                   <div class="col-md-4">
+																	</div>
+                                    <div class="col-md-4">
+                                    	<p class="text-center "><b>Please Note</b></p>
+                                    </div>
+                                    <div class="col-md-4">
+																	</div>
+                                </div>
+                                <div class="panel-body">
+																		<div><p class="alert alert-success" style="text-align:center; margin:0!important"><b>The test auto submits so don't worry when time expires</b></p></div>
+                                </div>
+                            </div>
+                        
+                		</div>
                 
             </div>
+					</div>
         </main>
 
         <div class="cd-overlay"></div>
