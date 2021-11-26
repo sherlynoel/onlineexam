@@ -5,7 +5,7 @@ if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
 	$mylname = $_SESSION['last_name'];
 	$mygender = $_SESSION['gender'];
 	$mydob = $_SESSION['dob'];
-	
+	$myresume = $_SESSION['resume'];
 	$myemail = $_SESSION['email'];
 	$myphone = $_SESSION['phone'];
 	$mydepartment = $_SESSION['department'];

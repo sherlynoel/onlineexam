@@ -17,7 +17,8 @@ if ($result->num_rows > 0) {
 	$sddob = $row['dob'];
 	$sdaddress = $row['address'];
 	$sdemail = $row['email'];
-	$sdphone = $row['phone'];
+    $sdphone = $row['phone'];
+    $sdresume = $row['resume'];
 	$sddepartment = $row['department'];
 	$sdcategory = $row['category'];
 	$sdavatar = $row['avatar'];
@@ -46,7 +47,7 @@ if ($result->num_rows > 0) {
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -184,16 +185,16 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
                     <ul class="menu accordion-menu">
-                        <li><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
-                        <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li>
-                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
+                    <li class="active"><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
+                        <!-- <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li> -->
                         
-                        <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
-                        <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
-                        <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li>
-                        <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li>
-                        <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
 
+                        <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
+                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
+                        <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
+                        <!-- <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li> -->
+                        <!-- <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li> -->
+                        <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
                     </ul>
                 </div>
             </div>
@@ -271,8 +272,14 @@ if ($result->num_rows > 0) {
                                                 <td><b><?php echo "$sdphone"; ?></b></td>
                                                
                                             </tr>
-											<tr>
+                                            <tr>
                                                 <th scope="row">8</th>
+                                                <td>Resume</td>
+                                                <td><b><a href="<?php echo "$sdresume"; ?>">Click to View Resume</a></b></td>
+                                               
+                                            </tr>
+											<tr>
+                                                <th scope="row">9</th>
                                                 <td>Department</td>
                                                 <td><b><?php echo "$sddepartment"; ?></b></td>
                                                
@@ -321,8 +328,8 @@ if ($result->num_rows > 0) {
 									        <tr>
                                                 <td>'.$row['exam_name'].'</td>
                                                 <td>'.$row['date'].'</td>
-                                                <td>'.$row['score'].'%</td>
-                                                <td>'.$row['status'].'</td>
+                                                <td>'.$row['score'].'</td>
+                                                <td>'.$row['final_status'].'</td>
                                             </tr>';
                                      }
 									 print '

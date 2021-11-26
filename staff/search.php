@@ -1,13 +1,18 @@
 <?php 
 include 'includes/check_user.php'; 
 include 'includes/check_reply.php';
+
+if (isset($_GET['keyword'])) {
+$keyword = ucwords($_GET['keyword']);	
+$query = "SELECT * FROM tbl_users WHERE first_name LIKE '%$keyword%' AND role = 'student' or last_name LIKE '%$keyword%' AND role = 'student'";
+}
 ?>
 <!DOCTYPE html>
 <html>
    
 <head>
         
-        <title>GATE | My Examinations</title>
+        <title>GATE | Search "<?php echo strtoupper($keyword); ?>"</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
@@ -15,7 +20,7 @@ include 'includes/check_reply.php';
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -38,6 +43,14 @@ include 'includes/check_reply.php';
         <link href="../assets/css/snack.css" rel="stylesheet" type="text/css"/>
         <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
         <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
+		
+
+        <link href="../assets/plugins/summernote-master/summernote.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/plugins/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
+        
 		
 
         
@@ -63,6 +76,14 @@ include 'includes/check_reply.php';
             </nav>
             <button class="close-button" id="close-button">Close Menu</button>
         </div>
+        <form class="search-form" action="search.php" method="GET">
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control search-input" placeholder="Search student..." required>
+                <span class="input-group-btn">
+                    <button class="btn btn-default close-search waves-effect waves-button waves-classic" type="button"><i class="fa fa-times"></i></button>
+                </span>
+            </div>
+        </form>
         <main class="page-content content-wrap">
             <div class="navbar">
                 <div class="navbar-inner">
@@ -74,11 +95,15 @@ include 'includes/check_reply.php';
                     <div class="logo-box">
                         <a href="./" class="logo-text"><span><img src="gate.png" alt="" height="55" width="130"></span></a>
                     </div>
-
+                    <div class="search-button">
+                        <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
+                    </div>
                     <div class="topmenu-outer">
                         <div class="top-menu">
                             <ul class="nav navbar-nav navbar-right">
-
+                                <li>	
+                                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
+                                </li>
 
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown">
@@ -127,24 +152,29 @@ include 'includes/check_reply.php';
                        
                                 </div>
                                 <div class="sidebar-profile-details">
-                                    <span><?php echo "$myfname"; ?> <?php echo "$mylname"; ?><br><small>GATE Student</small></span>
+                                    <span><?php echo "$myfname"; ?> <?php echo "$mylname"; ?><br><small>GATE Staff</small></span>
                                 </div>
                             </a>
                         </div>
                     </div>
                     <ul class="menu accordion-menu">
-                        <li><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
-                        <li><a href="subject.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-file"></span><p>Subject</p></a></li>
+                    <li class="active"><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
+                        <!-- <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li> -->
+                        
+
                         <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
-                        <li class="active"><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
-                  <!--      <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
--->
+                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
+                        <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
+                        <!-- <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li> -->
+                        <!-- <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li> -->
+                        <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
+
                     </ul>
                 </div>
             </div>
             <div class="page-inner">
                 <div class="page-title">
-                    <h3>My Examinations</h3>
+                    <h3>Search results for "<b><?php echo strtoupper($keyword); ?></b>"</h3>
 
 
 
@@ -157,10 +187,23 @@ include 'includes/check_reply.php';
 
                                 <div class="panel panel-white">
                                     <div class="panel-body">
+                                        <div role="tabpanel">
+                                   
+                                            <ul class="nav nav-tabs" role="tablist">
+			
+                                                <li role="presentation" class="active"><a href="#tab5" role="tab" data-toggle="tab">Students</a></li>
+                                                <li role="presentation"><a href="#tab6" role="tab" data-toggle="tab">Add Students</a></li>										
+												
+						
+
+                                            </ul>
+                                    
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane active fade in" id="tab5">
                                            <div class="table-responsive">
 										   <?php
 										   include '../database/config.php';
-										   $sql = "SELECT * FROM tbl_examinations WHERE department = '$mydepartment'";
+										   $sql = $query;
                                            $result = $conn->query($sql);
 
                                            if ($result->num_rows > 0) {
@@ -169,41 +212,54 @@ include 'includes/check_reply.php';
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-												<th>Subjects</th>
-												<th>Deadline</th>
+												<th>Gender</th>
+												<th>Category</th>
                                                 <th>Status</th>
+                                                <th>Date of Birth</th>
                                                 <th>Action</th>
-                                   
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>Name</th>
-												<th>Subjects</th>
-												<th>Deadline</th>
+												<th>Gender</th>
+												<th>Category</th>
                                                 <th>Status</th>
+                                                <th>Date of Birth</th>
                                                 <th>Action</th>
-                                           
                                             </tr>
                                         </tfoot>
                                         <tbody>';
      
                                            while($row = $result->fetch_assoc()) {
-											   $status = $row['status'];
-											   if ($status == "Active") {
+											   
+											   $status = $row['acc_stat'];
+											   if ($status == "1") {
 											   $st = '<p class="text-success">ACTIVE</p>';
-											   $stl = '<a class="btn btn-success" href="take-assessment.php?id='.$row['exam_id'].'">Take Assessment</a>';
+											   $stl = '<a href="pages/make_sd_in.php?id='.$row['user_id'].'">Make Inactive</a>';
 											   }else{
 											   $st = '<p class="text-danger">INACTIVE</p>'; 
-                                               $stl = '<a class="btn btn-danger disabled" href="#">Take Assessment</a>';											   
+                                               $stl = '<a href="pages/make_sd_ac.php?id='.$row['user_id'].'">Make Active</a>';											   
 											   }
                                           print '
 										       <tr>
-                                                <td>'.$row['exam_name'].'</td>
-												<td>'.$row['category'].'</td>
-                                                <td>'.$row['date'].'</td>
+                                                <td>'.$row['first_name'].' '.$row['last_name'].'</td>
+												<td>'.$row['gender'].'</td>
+                                                <td>'.$row['category'].'</td>
                                                 <td>'.$st.'</td>
-												<td>'.$stl.'</td>
+												<td>'.$row['dob'].'</td>
+                                                <td><div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Select Action
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>'.$stl.'</li>
+													<li><a href="edit-student.php?sid='.$row['user_id'].'">Edit Student</a></li>
+													<li><a href="view-student.php?sid='.$row['user_id'].'">View Student</a></li>
+                                                    <li><a'; ?> onclick = "return confirm('Drop <?php echo $row['first_name']; ?> ?')" <?php print ' href="pages/drop_sd.php?id='.$row['user_id'].'">Drop Student</a></li>
+                                                </ul>
+                                            </div></td>
           
                                             </tr>';
                                            }
@@ -226,6 +282,95 @@ include 'includes/check_reply.php';
                  
 
                                     </div>
+                                                       
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane fade" id="tab6">
+                                         <form action="pages/add_student.php" method="POST">
+										<div class="form-group">
+                                            <label for="exampleInputEmail1">First Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter first name" name="fname" required autocomplete="off">
+                                        </div>
+										<div class="form-group">
+                                            <label for="exampleInputEmail1">Last Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter last name" name="lname" required autocomplete="off">
+                                        </div>
+										<div class="form-group">
+										  <label for="exampleInputEmail1">Male</label>
+                                            <input type="radio"  name="gender" value="Male" required>
+                                            <label for="exampleInputEmail1">Female</label>
+                                            <input type="radio" name="gender" value="Female" required>
+                                        </div>
+										<div class="form-group">
+                                            <label for="exampleInputEmail1">Email Address</label>
+                                            <input type="email" class="form-control" placeholder="Enter email address" name="email" required autocomplete="off">
+                                        </div>
+										<div class="form-group">
+                                            <label for="exampleInputEmail1">Phone</label>
+                                            <input type="text" class="form-control" placeholder="Enter phone" name="phone" required autocomplete="off">
+                                        </div>
+										<div class="form-group">
+                                            <label for="exampleInputEmail1">Select Department</label>
+                                            <select class="form-control" name="department" required>
+											<option value="" selected disabled>-Select department-</option>
+											<?php
+											include '../database/config.php';
+											$sql = "SELECT * FROM tbl_departments WHERE status = 'Active' ORDER BY name";
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+    
+                                            while($row = $result->fetch_assoc()) {
+                                            print '<option value="'.$row['name'].'">'.$row['name'].'</option>';
+                                            }
+                                           } else {
+                          
+                                            }
+                                             $conn->close();
+											 ?>
+											
+											</select>
+                                        </div>
+										
+										<div class="form-group">
+                                            <label for="exampleInputEmail1">Select Category</label>
+                                            <select class="form-control" name="category" required>
+											<option value="" selected disabled>-Select category-</option>
+											<?php
+											include '../database/config.php';
+											$sql = "SELECT * FROM tbl_categories WHERE status = 'Active' ORDER BY name";
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+    
+                                            while($row = $result->fetch_assoc()) {
+                                            print '<option value="'.$row['name'].'">'.$row['name'].'</option>';
+                                            }
+                                           } else {
+                          
+                                            }
+                                             $conn->close();
+											 ?>
+											
+											</select>
+                                        </div>
+										
+									<div class="form-group">
+                                    <label >Date of Birth</label>
+                                    <input type="text" class="form-control date-picker" name="dob" required autocomplete="off" placeholder="Select date of birth">
+                                    </div>
+									
+									<div class="form-group">
+                                            <label for="exampleInputEmail1">Address</label>
+                                            <textarea style="resize: none;" rows="4" class="form-control" placeholder="Enter address" name="address" required autocomplete="off"></textarea>
+                                     </div>
+
+
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                       </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>  
   
@@ -236,7 +381,7 @@ include 'includes/check_reply.php';
                         </div>
                     </div>
                 </div>
-                
+               
             </div>
         </main>
 		<?php if ($ms == "1") {
@@ -268,6 +413,11 @@ include 'includes/check_reply.php';
         <script src="../assets/js/modern.min.js"></script>
         <script src="../assets/js/pages/table-data.js"></script>
 		<script src="../assets/plugins/select2/js/select2.min.js"></script>
+        <script src="../assets/plugins/summernote-master/summernote.min.js"></script>
+        <script src="../assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+        <script src="../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+        <script src="../assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="../assets/js/pages/form-elements.js"></script>
 		
 
 		<script>

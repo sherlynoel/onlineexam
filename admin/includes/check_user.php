@@ -2,6 +2,7 @@
 session_start();
 if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
 	
+
 	$myfname = $_SESSION['first_name'];
 	$mylname = $_SESSION['last_name'];
 	$mygender = $_SESSION['gender'];

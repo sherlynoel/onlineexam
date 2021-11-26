@@ -7,7 +7,7 @@ include 'includes/check_reply.php';
    
 <head>
         
-        <title>GATE | My Results</title>
+        <title>CSE EXAM TOOL | My Results</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
@@ -15,22 +15,22 @@ include 'includes/check_reply.php';
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/plugins/fontawesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/line-icons/simple-line-icons.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/offcanvasmenueffects/css/menu_cornerbox.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/waves/waves.min.css" rel="stylesheet" type="text/css"/>	
+        <link href="../assets/plugins/line-icons/simple-line-icons.css" rel="stylesheet" type="text/css"/>  
+        <link href="../assets/plugins/offcanvasmenueffects/css/menu_cornerbox.css" rel="stylesheet" type="text/css"/>   
+        <link href="../assets/plugins/waves/waves.min.css" rel="stylesheet" type="text/css"/>   
         <link href="../assets/plugins/switchery/switchery.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/3d-bold-navigation/css/style.css" rel="stylesheet" type="text/css"/>	
+        <link href="../assets/plugins/3d-bold-navigation/css/style.css" rel="stylesheet" type="text/css"/>  
         <link href="../assets/plugins/slidepushmenus/css/component.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css"/>	
+        <link href="../assets/plugins/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css"/>  
+        <link href="../assets/plugins/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css"/>  
         <link href="../assets/plugins/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css">
         <link href="../assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
-		<link href="../assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/images/icon.png" rel="icon">
         <link href="../assets/css/modern.min.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/css/themes/green.css" class="theme-color" rel="stylesheet" type="text/css"/>
@@ -38,7 +38,7 @@ include 'includes/check_reply.php';
         <link href="../assets/css/snack.css" rel="stylesheet" type="text/css"/>
         <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
         <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
-		
+        
 
         
     </head>
@@ -47,15 +47,15 @@ include 'includes/check_reply.php';
         <div class="menu-wrap">
             <nav class="profile-menu">
                 <div class="profile">
-				<?php 
-				if ($myavatar == NULL) {
-				print' <img width="60" src="../assets/images/'.$mygender.'.png" alt="'.$myfname.'">';
-				}else{
-				echo '<img src="data:image/jpeg;base64,'.base64_encode($myavatar).'" width="60" alt="'.$myfname.'"/>';	
-				}
-						
-				?>
-				<span><?php echo "$myfname"; ?> <?php echo "$mylname"; ?></span></div>
+                <?php 
+                if ($myavatar == NULL) {
+                print' <img width="60" src="../assets/images/'.$mygender.'.png" alt="'.$myfname.'">';
+                }else{
+                echo '<img src="data:image/jpeg;base64,'.base64_encode($myavatar).'" width="60" alt="'.$myfname.'"/>';  
+                }
+                        
+                ?>
+                <span><?php echo "$myfname"; ?> <?php echo "$mylname"; ?></span></div>
                 <div class="profile-menu-list">
                     <a href="profile.php"><i class="fa fa-user"></i><span>Profile</span></a>
                     <a href="logout.php"><i class="fa fa-sign-out"></i><span>Logout</span></a>
@@ -84,14 +84,14 @@ include 'includes/check_reply.php';
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown">
                                         <span class="user-name"><?php echo "$myfname"; ?> <?php echo "$mylname"; ?><i class="fa fa-angle-down"></i></span>
-										<?php 
-						                if ($myavatar == NULL) {
-						                print' <img class="img-circle avatar"  width="40" height="40" src="../assets/images/'.$mygender.'.png" alt="'.$myfname.'">';
-						                }else{
-						                echo '<img width="40" height="40" src="data:image/jpeg;base64,'.base64_encode($myavatar).'" class="img-circle avatar"  alt="'.$myfname.'"/>';	
-						                }
-						
-						                ?>
+                                        <?php 
+                                        if ($myavatar == NULL) {
+                                        print' <img class="img-circle avatar"  width="40" height="40" src="../assets/images/'.$mygender.'.png" alt="'.$myfname.'">';
+                                        }else{
+                                        echo '<img width="40" height="40" src="data:image/jpeg;base64,'.base64_encode($myavatar).'" class="img-circle avatar"  alt="'.$myfname.'"/>';   
+                                        }
+                        
+                                        ?>
                                     </a>
                                     <ul class="dropdown-menu dropdown-list" role="menu">
                                         <li role="presentation"><a href="profile.php"><i class="fa fa-user"></i>Profile</a></li>
@@ -117,14 +117,14 @@ include 'includes/check_reply.php';
                         <div class="sidebar-profile">
                             <a href="javascript:void(0);" id="profile-menu-link">
                                 <div class="sidebar-profile-image">
-								<?php 
-						        if ($myavatar == NULL) {
-						        print' <img class="img-circle img-responsive" src="../assets/images/'.$mygender.'.png" alt="'.$myfname.'">';
-						        }else{
-						        echo '<img src="data:image/jpeg;base64,'.base64_encode($myavatar).'" class="img-circle img-responsive"  alt="'.$myfname.'"/>';	
-						        }
-						
-						        ?>
+                                <?php 
+                                if ($myavatar == NULL) {
+                                print' <img class="img-circle img-responsive" src="../assets/images/'.$mygender.'.png" alt="'.$myfname.'">';
+                                }else{
+                                echo '<img src="data:image/jpeg;base64,'.base64_encode($myavatar).'" class="img-circle img-responsive"  alt="'.$myfname.'"/>';  
+                                }
+                        
+                                ?>
                        
                                 </div>
                                 <div class="sidebar-profile-details">
@@ -147,10 +147,7 @@ include 'includes/check_reply.php';
                 <div class="page-title">
                     <h3>My Results</h3>
 
-
-
-                </div>
-                <div id="main-wrapper">
+                    <div id="main-wrapper">
                     <div class="row">
                         <div class="col-md-12">
 						<div class="row">
@@ -160,55 +157,74 @@ include 'includes/check_reply.php';
                                     <div class="panel-body">
                                            <div class="table-responsive">
 										   <?php
-										   include '../database/config.php';
-										   $sql = "SELECT * FROM tbl_assessment_records WHERE student_id = '$myid'";
+                                           include '../database/config.php';
+                                           $sql = "SELECT distinct A.exam_name FROM tbl_assessment_records A , tbl_examinations B WHERE A.exam_id = b.exam_id AND student_id = '$myid'";
+                                           
+                                           $result = $conn->query($sql);
+                                           if ($result->num_rows > 0) {
+                                            while($row = $result->fetch_assoc()) {
+                                               $exna = $row['exam_name'];
+                                               
+                                               print '<h4><b>'.$exna.'</b></h4>';
+
+										   $sql = "SELECT * FROM tbl_assessment_records A , tbl_examinations B WHERE A.exam_id = b.exam_id AND student_id = '$myid' and A.exam_name = '$exna'";
+                                           
                                            $result = $conn->query($sql);
 
                                            if ($result->num_rows > 0) {
 										print '
 										<table id="example" class="display table" style="width: 100%; cellspacing: 0;">
-											<thead>
-												<tr>
-													<th>Exam</th>
-													<th>Student ID</th>
-													<th>Student Name</th>
-													<th>Score</th>
-													<th>Date</th>
-													<th>Status</th>
-													
-												</tr>
-											</thead>
-											<tfoot>
-												<tr>
-													<th>Exam</th>
-													<th>Student ID</th>
-													<th>Student Name</th>
-													<th>Score</th>
-													<th>Date</th>
-													<th>Status</th>
-													
-												</tr>
-											</tfoot>
-											<tbody>';
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+												
+												<th>Score</th>
+                                                <th>Status</th>
+                                                <th></th>
+                                                
+                                   
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Date</th>
+												
+												<th>Score</th>
+                                                <th>Status</th>
+                                                <th></th>
+                                               
+                                           
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>';
      
                                            while($row = $result->fetch_assoc()) {
-
+                                            $timestamp =  $row['date'];
+                                            $datetime = explode(" ",$timestamp);
+                                            $date = $datetime[0];
+                                            $time = $datetime[1];
+											   
                                           print '
-																							<tr>
-																								<td>'.$row['exam_name'].'</td>
-																								<td>'.$row['student_id'].'</td>
-																								<td>'.$row['student_name'].'</td>
-																								<td>'.$row['score'].'</td>
-																								<td>'.$row['date'].'</td>
-																								<td>'.$row['status'].'</td>
-																								
-																							</tr>';
+                                               <tr>
+                                               
+                                                <td>'.$date.'</td>
+												
+                                                <td>'.$row['score'].'</td>
+                                                <td>'.$row['exam_status'].'</td>
+                                                ';
+                                                if($row['report'] == 1){
+                                                    print '
+                                                <td><a href="view_report.php?exid='.$row['exam_id'].'"><button type="button" class = "btn btn-primary ">View Report</button></a></td>';
+                                                }
+                                                print '
+          
+                                            </tr>';
                                            }
 										   
 										   print '
 									   </tbody>
                                        </table>  ';
-                                            } else {
+                                            }}} else {
 											print '
 												<div class="alert alert-info" role="alert">
                                         Nothing was found in database.
@@ -233,47 +249,9 @@ include 'includes/check_reply.php';
                         </div>
                     </div>
                 </div>
-                
-            </div>
-        </main>
-		<?php if ($ms == "1") {
-?> <div class="alert alert-success" id="snackbar"><?php echo "$description"; ?></div> <?php	
-}else{
-	
-}
-?>
 
-        <div class="cd-overlay"></div>
-
-        <script src="../assets/plugins/jquery/jquery-2.1.4.min.js"></script>
-        <script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-        <script src="../assets/plugins/pace-master/pace.min.js"></script>
-        <script src="../assets/plugins/jquery-blockui/jquery.blockui.js"></script>
-        <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="../assets/plugins/switchery/switchery.min.js"></script>
-        <script src="../assets/plugins/uniform/jquery.uniform.min.js"></script>
-        <script src="../assets/plugins/offcanvasmenueffects/js/classie.js"></script>
-        <script src="../assets/plugins/offcanvasmenueffects/js/main.js"></script>
-        <script src="../assets/plugins/waves/waves.min.js"></script>
-        <script src="../assets/plugins/3d-bold-navigation/js/main.js"></script>
-        <script src="../assets/plugins/jquery-mockjax-master/jquery.mockjax.js"></script>
-        <script src="../assets/plugins/moment/moment.js"></script>
-        <script src="../assets/plugins/datatables/js/jquery.datatables.min.js"></script>
-        <script src="../assets/plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
-        <script src="../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-        <script src="../assets/js/modern.min.js"></script>
-        <script src="../assets/js/pages/table-data.js"></script>
-		<script src="../assets/plugins/select2/js/select2.min.js"></script>
-		
-
-		<script>
-function myFunction() {
-    var x = document.getElementById("snackbar")
-    x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-</script>
+                </div>
+           
     </body>
 
 </html>

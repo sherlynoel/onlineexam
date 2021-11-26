@@ -14,7 +14,7 @@ include 'includes/fetch_records.php';
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
         
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -141,13 +141,14 @@ include 'includes/fetch_records.php';
                     </div>
                     <ul class="menu accordion-menu">
                         <li class="active"><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
-                        <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li>
-                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
+                        <!-- <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li> -->
+                        
 
                         <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
+                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
                         <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
-                        <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li>
-                        <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li>
+                        <!-- <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li> -->
+                        <!-- <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li> -->
                         <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
 
 
@@ -166,7 +167,8 @@ include 'includes/fetch_records.php';
                 </div>
                 <div id="main-wrapper">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6">
+                    
+                        <div class="col-lg-4 col-md-6">
                             <a href="departments.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
@@ -180,7 +182,24 @@ include 'includes/fetch_records.php';
                                 </div>
                             </div></a>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
+                            <a href="categories.php">
+                            <div class="panel info-box panel-white">
+                                <div class="panel-body">
+                                    <div class="info-box-stats">
+                                        <p class="counter"><?php echo number_format($categories); ?></p>
+                                        <span class="info-box-title">SUBJECTS <?php echo "$fp $pp"; ?></span>
+                                    </div>
+                                    <div class="info-box-icon">
+                                        <i class="icon-tag"></i>
+                                    </div>
+                                </div>
+                            </div></a>
+                        </div>
+                        
+                        
+                        
+                        <div class="col-lg-4 col-md-6">
                             <a href="students.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
@@ -195,7 +214,7 @@ include 'includes/fetch_records.php';
                                 </div>
                             </div></a>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <a href="examinations.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
@@ -210,28 +229,29 @@ include 'includes/fetch_records.php';
                                 </div>
                             </div></a>
                         </div>
-                       
-						
-			<div class="col-lg-3 col-md-6">
-                            <a href="categories.php">
+                        <div class="col-lg-4 col-md-6">
+                            <a href="students.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
                                     <div class="info-box-stats">
-                                        <p class="counter"><?php echo number_format($categories); ?></p>
-                                        <span class="info-box-title">SUBJECTS <?php echo "$fp $pp"; ?></span>
+                                        <p class="counter"><?php echo number_format($faculties); ?></p>
+                                        <span class="info-box-title">FACULTIES</span>
                                     </div>
                                     <div class="info-box-icon">
-                                        <i class="icon-tag"></i>
+                                        <i class="icon-user"></i>
                                     </div>
+     
                                 </div>
                             </div></a>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+						
+			
+                        <!-- <div class="col-lg-3 col-md-6">
                             <a href="notice.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
                                     <div class="info-box-stats">
-                                        <p class="counter"><?php echo number_format($notice); ?></p>
+                                        <p class="counter"><?php //echo number_format($notice); ?></p>
                                         <span class="info-box-title">NOTICE</span>
                                     </div>
                                     <div class="info-box-icon">
@@ -240,13 +260,13 @@ include 'includes/fetch_records.php';
      
                                 </div>
                             </div></a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
+                        </div> -->
+                        <!-- <div class="col-lg-3 col-md-6">
                             <a href="questions.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
                                     <div class="info-box-stats">
-                                        <p><span class="counter"><?php echo number_format($questions); ?></span></p>
+                                        <p><span class="counter"><?php// echo number_format($questions); ?></span></p>
                                         <span class="info-box-title">QUESTIONS</span>
                                     </div>
                                     <div class="info-box-icon">
@@ -255,8 +275,8 @@ include 'includes/fetch_records.php';
 
                                 </div>
                             </div></a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
+                        </div> -->
+                        <div class="col-lg-4 col-md-6">
                             <a href="students.php">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
@@ -271,6 +291,7 @@ include 'includes/fetch_records.php';
                             </div></a>
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="panel panel-white">

@@ -24,6 +24,7 @@ if ($result->num_rows > 0) {
 	$_SESSION['avatar'] = $row['avatar'];
 	$_SESSION['myid'] = $row['user_id'];
 	$_SESSION['mycategory'] = $row['category'];
+	$_SESSION['resume'] = $row['resume'];
 	$accstat = $row['acc_stat'];
 	if ($accstat == "0") {
 	 header("location:../?rp=5732");	
@@ -35,11 +36,8 @@ if ($result->num_rows > 0) {
     }
 } else {
 	
-   	
-	echo "<script language=\"JavaScript\">\n";
-	echo "alert('Username or Password was incorrect!');\n";
-	echo "window.location='../index.php'";
-	echo "</script>";
+   	header("location:../?rp=0912");
+	
 
 }
 $conn->close();

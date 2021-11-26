@@ -1,0 +1,1 @@
+SELECT * FROM tbl_assessment_records WHERE exam_id = 'EX-807548' AND student_id = 'S150-980-896'

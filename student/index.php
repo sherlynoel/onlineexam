@@ -6,6 +6,7 @@ include 'includes/fetch_records.php';
 <html>
     
 <head>
+    
         
         <title>GATE | Student Dashboard</title>
         
@@ -15,30 +16,15 @@ include 'includes/fetch_records.php';
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
         
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+       <!--  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
-        <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/plugins/fontawesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/line-icons/simple-line-icons.css" rel="stylesheet" type="text/css"/>	
         <link href="../assets/plugins/offcanvasmenueffects/css/menu_cornerbox.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/waves/waves.min.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/switchery/switchery.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/3d-bold-navigation/css/style.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/slidepushmenus/css/component.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/metrojs/MetroJs.min.css" rel="stylesheet" type="text/css"/>	
-        <link href="../assets/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>	
         <link href="../assets/images/icon.png" rel="icon">
         <link href="../assets/css/modern.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/css/themes/font-awesome.min.css" class="theme-color" rel="stylesheet" type="text/css"/>
-        <link href="../assets/css/custom.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/css/themes/green.css" class="theme-color" rel="stylesheet" type="text/css"/>
-        <link href="../assets/css/custom.css" rel="stylesheet" type="text/css"/>
-
-        <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
-        <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
-        
+       
     </head>
 
     <body class="page-header-fixed">
@@ -138,7 +124,7 @@ include 'includes/fetch_records.php';
                         <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
                         <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
                         <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
-                     <li><a href="helps.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-modal-window"></span><p>Help</p></a></li>
+                     <!-- <li><a href="helps.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-modal-window"></span><p>Help</p></a></li> -->
                     </ul>
                 </div>
             </div>
@@ -201,7 +187,7 @@ include 'includes/fetch_records.php';
                         </div>
 						
 						                        
-                        <div class="col-lg-3 col-md-6">
+                        <!-- <div class="col-lg-3 col-md-6">
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
                                     <div class="info-box-stats">
@@ -214,7 +200,7 @@ include 'includes/fetch_records.php';
      
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
              
 						
 						<div class="col-lg-3 col-md-6">
@@ -234,50 +220,73 @@ include 'includes/fetch_records.php';
 						                        <div class="col-lg-12 col-md-12">
                             <div class="panel panel-white">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title">Notice</h4>
+                                    <h4 class="panel-title">Exam Results</h4>
                                 </div>
                                 <div class="panel-body">
-                          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                           <div class="table-responsive">
+										   <?php
+										   include '../database/config.php';
+										   $sql = "SELECT distinct exam_name, final_status FROM tbl_assessment_records where student_id = '$myid'  ";
+                                           $result = $conn->query($sql);
 
-                            <?php
-							include '../database/config.php';
-							$sql = "SELECT * FROM tbl_notice ORDER by id DESC";
-                            $result = $conn->query($sql);
+                                           if ($result->num_rows > 0) {
+										print '
+										<table id="example" class="display table" style="width: 100%; cellspacing: 0;">
+                                        <thead>
+                                            <tr>
+                                                <th>Exam Name</th>
+												
+												
+                                                <th>Status</th>
+                                                
+                                                
+                                   
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Exam Name</th>
+												
+												
+                                                <th>Status</th>
+                                                
+                                               
+                                           
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>';
+     
+                                           while($row = $result->fetch_assoc()) {
+											   
+                                          print '
+										       <tr>
+                                                <td>'.$row['exam_name'].'</td>
+												
+                                                
+                                                <td>'.$row['final_status'].'</td>
+                                                
+          
+                                            </tr>';
+                                           }
+										   
+										   print '
+									   </tbody>
+                                       </table>  ';
+                                            } else {
+											print '
+												<div class="alert alert-info" role="alert">
+                                        Nothing was found in database.
+                                    </div>';
+    
+                                           }
+                                           $conn->close();
+										   
+										   ?>
 
-                            if ($result->num_rows > 0) {
-                           $tabno = 1;
-                            while($row = $result->fetch_assoc()) {
-                            print '
-							<div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading'.$tabno.'">
-                            <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse'.$tabno.'" aria-expanded="false" aria-controls="collapse'.$tabno.'">
-                            '.$row['title'].'
-                            </a>
-                            </h4>
-                            </div>
-                            <div id="collapse'.$tabno.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'.$tabno.'">
-                            <div class="panel-body">
-                            '.$row['description'].'
-							<hr><i class="fa fa-calendar"></i> '.$row['post_date'].' | <i class="fa fa-refresh"></i> '.$row['last_update'].'
-                            </div>
-                            </div>
-                            </div>';
-					       $tabno++;
-                             }
-                            } else {
-                        print '
-						<div class="alert alert-info" role="alert">
-                          Nothing was found in database.
-                        </div>';
-                             }
-                             $conn->close();
-							
-							?>
 
-                                        </div>
-                                </div>
-                            </div>
+                 
+
+                                    </div>
                         </div>
                     </div>
 					

@@ -10,7 +10,7 @@ $attended_exams = 0;
 $locked_exams = 0;
 $notice = 0;
 
-$sql = "SELECT * FROM tbl_users WHERE department = '$mydepartment'";
+$sql = "SELECT * FROM tbl_users WHERE department = '$mydepartment' AND role = 'student'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
 }
 
 
-$sql = "SELECT * FROM tbl_examinations WHERE department = '$mydepartment' AND status = 'Active'";
+$sql = "SELECT * FROM tbl_examinations WHERE  status = 'Active'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

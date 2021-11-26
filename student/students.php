@@ -15,7 +15,7 @@ include 'includes/fetch_records.php';
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
         
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -157,7 +157,7 @@ include 'includes/fetch_records.php';
 							<?php
 							include '../database/config.php';
 							
-							$sql = "SELECT * FROM tbl_users WHERE department = '$mydepartment' ORDER BY first_name";
+							$sql = "SELECT * FROM tbl_users WHERE department = '$mydepartment' and role = 'student' ORDER BY first_name";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {

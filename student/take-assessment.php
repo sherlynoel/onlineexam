@@ -4,7 +4,7 @@ if (isset($_GET['id'])) {
 include '../database/config.php';	
 $exam_id = mysqli_real_escape_string($conn, $_GET['id']);
 $record_found = 0;
-$sql = "SELECT * FROM tbl_examinations WHERE exam_id = '$exam_id' AND department = '$mydepartment'";
+$sql = "SELECT * FROM tbl_examinations WHERE exam_id = '$exam_id' ";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -83,7 +83,7 @@ header("location:./");
     
 <head>
         
-        <title>GATE | Take Assessment</title>
+        <title>STUDENT | Take Assessment</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
@@ -91,7 +91,7 @@ header("location:./");
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
         
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -112,6 +112,12 @@ header("location:./");
         
         <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
         <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
+        <script type="text/javascript"> 
+        window.history.forward(); 
+        function noBack() { 
+            window.history.forward(); 
+        } 
+    </script> 
         
     </head>
     <body class="page-header-fixed">
@@ -265,11 +271,11 @@ header("location:./");
                                                    <td><b><?php echo "$mark"; ?></b></td>
                                                </tr>
                                                
-                                               <tr>
+                                             <!--  <tr>
                                                    <th scope="row">5</th>
                                                    <td>Pass Percentage</td>
                                                    <td><b><?php echo "$passmark"; ?>%</b></td>
-                                               </tr>
+                                               </tr>-->
                                               
                                            </tbody>
                                         </table>
@@ -319,6 +325,7 @@ header("location:./");
 								    print '
                                  <div class="alert alert-success" role="alert">
                                   You Have Already Sumited the Test.
+                                  <a href="assessment-info.php" class="button">Result</a>
                                     </div> ';
 								}
 								

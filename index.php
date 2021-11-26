@@ -5,7 +5,7 @@
 <head>
 
 
-        <title>GATE | Login</title>
+        <title>Login</title>
        
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,13 +47,16 @@
                                     
                                     
                                     <span class="login100-form-title">
-						Online Gate Exam Login
+						Online Exam Login
 					</span>
-
-                                    
-                                    
+				<span style="font-weight: bolder;font-size:35px;font-color:teal">
+							<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--> <a class="login100-form-title" href="registers.php">New User <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true">&nbsp;&nbsp;&nbsp; Register</i> 
+						</a>
+					</span>
+					        <!-- <br><br>                       -->
+                           
                                     <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                                        <input class="input100" type="email"  placeholder="Email or Registration No."  autocomplete="off" name="user" required>
+                                        <input class="input100" type="email"  placeholder="CMRIT Email ID"  autocomplete="off" name="user" required>
                                     <span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -61,7 +64,7 @@
 					</div>
 
                                     <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                                        <input class="input100" type="password"  placeholder="Your strong password" name="login" required>
+                                        <input class="input100" type="password"  placeholder="Enter password" name="login" required>
                                     <span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -78,13 +81,6 @@
 						</span>
 
                                     <a class="txt2" href="forgot_pw.php" >Username / Password?</a></div>
-                                    <div class="text-center p-t-136">
-
-                                   <a class="txt2" href="registers.php">Register<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
-					</div>
-
-	
                                 </form>
                                
                             </div>

@@ -9,9 +9,11 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     
     while($row = $result->fetch_assoc()) {
+    $eid = $row['exam_id'];
+    $sid = $row['student_id'];
     $exam_name = $row['exam_name'];
 	$score = $row['score'];
-	$status = $row['status'];
+	$status = $row['exam_status'];
 	$c_ans = $row['c_ans'];
 	$w_ans = $row['f_ans'];
 	$skipped = $row['skipped'];
@@ -42,7 +44,7 @@ header("location:./");
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
         
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+       <!--  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -63,6 +65,17 @@ header("location:./");
         
         <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
         <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
+        <script type="text/javascript">
+            window.history.pushState({page: 1}, "", "");
+            window.onpopstate = function(event) 
+            {
+                if(event)
+                {
+                    window.location.href = 'redirect.php';
+                    // Code to handle back button or prevent from navigation
+                }
+            }
+        </script>
         
     </head>
     <body class="page-header-fixed">
@@ -176,10 +189,10 @@ header("location:./");
                         </ol>
                     </div>
                 </div>
-                <div id="main-wrapper">
+               <div id="main-wrapper">
                    <div class="row"> 
                        <div class=" col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           
                            <div class="row">
                            <div class="panel panel-white">
@@ -203,10 +216,10 @@ header("location:./");
 
 											   <tr>
                                                    <th scope="row">3</th>
-                                                   <td>Percentage</td>
-                                                   <td><?php echo "$score"; ?>%</td>
+                                                   <td>Score</td>
+                                                   <td><?php echo "$score"; ?></td>
                                                </tr>
-                                               <!--
+                                               
 											   											<tr>
                                                    <th scope="row">4</th>
                                                    <td>Correct Answer</td>
@@ -227,7 +240,7 @@ header("location:./");
                                                    <td>Status</td>
                                                    <td><?php echo "$status"; ?></td>
                                                </tr>
--->
+
                                            </tbody>
                                         </table>
                                     </div>
@@ -237,38 +250,8 @@ header("location:./");
                            
                         </div>
 						
-                           <div class="col-md-6">
-                            <div class="panel panel-white">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Status</h3>
-                                </div>
-                                <div class="panel-body">
-                                <?php
-								if ($status == "PASS") {
-								print '
-                                <div class="alert alert-success"  role="alert">
-                                         Well done! You have Completed and passed examination.
-                                    </div>';								
-								}else{
-																print '
-                                <div class="alert alert-danger" role="alert">
-                                      Sorry. Better luck next time
-                                    </div>';	
-									
-								}
-								
-								?>
-                               <div style="height:110px;"></div>
-                                </div>
-                            </div>
-                        </div>
-						
-	
-                    	</div>
-                    </div>
-                    <div class="row">
-                    	<div class="col-lg-12 col-md-12">
-                            <div class="panel panel-white">
+                           <div class="col-md-8">
+                           <div class="panel panel-white">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="visitors-chart">
@@ -280,8 +263,10 @@ header("location:./");
    
                                 </div>
                             </div>
-                        </div>
+                            </div>
+                            
                     </div>
+                    
 									
                 </div>
                 

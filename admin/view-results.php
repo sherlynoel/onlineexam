@@ -37,7 +37,7 @@ header("location:./");
         <meta name="keywords" content="Online Examination System" />
         <meta name="author" content="Bwire Charles Mashauri" />
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -175,16 +175,16 @@ header("location:./");
                         </div>
                     </div>
                     <ul class="menu accordion-menu">
-                        <li><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
-                        <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li>
-                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
-                       
-                        <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
-                        <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
-                        <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li>
-                        <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li>
-                        <li class="active"><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
+                    <li class="active"><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
+                        <!-- <li><a href="departments.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-folder-open"></span><p>Departments</p></a></li> -->
+                        
 
+                        <li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
+                        <li><a href="categories.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-tags"></span><p>Subject</p></a></li>
+                        <li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
+                        <!-- <li><a href="questions.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-question-sign"></span><p>Questions</p></a></li> -->
+                        <!-- <li><a href="notice.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-th-list"></span><p>Notice</p></a></li> -->
+                        <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>
                     </ul>
                 </div>
             </div>
@@ -216,28 +216,34 @@ header("location:./");
                                             <tr>
                                                 <th>Student Name</th>
 												<th>Student ID</th>
-						 <th>Semester</th>
-						 <th>Section</th>
+						 <th>Semester-Section</th>
+                         <th>Course</th>
+                         <th>Batch</th>
+                         <th>Department</th>
+						 <th>USN</th>
 												<th>Exam Name</th>
                                                 <th>Score</th>
                                                 <th>Status</th>
-												<th>Date</th>
-												<th>RE Exam</th>
-                                                <th>Action</th>
+                                                <th></th>
+												
+                                                
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>Student Name</th>
 												<th>Student ID</th>
-						 <th>Semester</th>
-						 <th>Section</th>
+						 <th>Semester-Section</th>
+                         <th>Course</th>
+                         <th>Batch</th>
+                         <th>Department</th>
+						 <th>USN</th>
 												<th>Exam Name</th>
                                                 <th>Score</th>
                                                 <th>Status</th>
-												<th>Date</th>
-												<th>RE Exam</th>
-                                                <th>Action</th>
+                                                <th></th>
+												
+                                                
                                             </tr>
                                         </tfoot>
                                         <tbody>';
@@ -247,25 +253,18 @@ header("location:./");
 										       <tr>
                                                 <td>'.$row['student_name'].'</td>
 												<td>'.$row['student_id'].'</td>
-						<td>'.$row['sem'].'</td>
-						<td>'.$row['sec'].'</td>
+						<td>'.$row['sem_sec'].'</td>
+                        <td>'.$row['course'].'</td>
+                        <td>'.$row['batch'].'</td>
+                        <td>'.$row['department'].'</td>
+						<td>'.$row['usn'].'</td>
                                                 <td>'.$row['exam_name'].'</td>
-                                                <td><b>'.$row['score'].'</b></td>
-												<td>'.$row['status'].'</td>
-												<td>'.$row['date'].'</td>
-												<td>'.$row['next_retake'].'</td>
-												<td><div class="btn-group" role="group">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                    Select Action
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                  
-													<li><a'; ?> onclick = "return confirm('Reactivate exam for <?php echo $row['student_name']; ?> ?')" <?php print ' href="pages/re-activate.php?rid='.$row['record_id'].'&eid='.$exam_id.'">Re-activate</a></li>
-									
-													
-                                                </ul>
-                                            </div></td>
+                                                <td><b>'.$row['final_score'].'</b></td>
+												<td>'.$row['final_status'].'</td>
+												<td><a href="view-attempts.php?exid='.$row['exam_name'].'&sid='.$row['student_id'].'" class="btn btn-success" >View - Attempts</a>
+
+</td>
+												
           
                                             </tr>';
                                            }
@@ -286,8 +285,9 @@ header("location:./");
 
                   <div>
              
-                    <a href="exl.php?eid=<?php echo $exam_id ?>" class="btn btn-success" value="Export">Export to EXL</a>
-             
+                    <a href="download_data_attempts.php?ex_name=<?php echo $exam_name ?>" class="btn btn-success" value="Export">Download Results</a>
+                    <a href="exl2.php?eid=<?php echo $exam_id ?>" class="btn btn-success" value="Export">Download Results(SHORT)</a>
+                    <a href="attempts.php?exid=<?php echo $exam_name ?>" class="btn btn-success" value="Export">View Retests</a>
             </div>
  
                                                                                                

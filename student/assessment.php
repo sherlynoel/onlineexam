@@ -5,6 +5,7 @@
 				include 'includes/check_reply.php';
 				include 'includes/fetch_records';
 				include '../includes/uniques.php';
+				
 
 			//getting details of exam
 				if (isset($_SESSION['current_examid'])) {
@@ -26,6 +27,10 @@
 							$t_mark = $row['t_mark'];
 							$pre = $row['pret'];
 							$t_question = $row['t_question'];
+							$t_easy = $row['t_easy'];
+							$t_medium = $row['t_medium'];
+							
+							$t_hard = $row['t_hard'];
 							$reexam = $row['re_exam'];
 							$terms = $row['terms'];
 							$status = $row['status'];
@@ -50,6 +55,10 @@
 
 			$mysem = $row['sem_sec'];
 			$usn = $row['usn'];
+			$batch = $row['batch'];
+			$course = $row['course'];
+			$department = $row['department'];
+			$email = $row['email'];
 
 			}
 			}else {
@@ -61,30 +70,23 @@
 			
 			
 
-			if ($result->num_rows > 0 ) {
-
-			    
-			       header("location:./take-assessment.php?id=$exam_id");
-			} else {
+//			if ($result->num_rows > 0 ) {
+//
+//			    
+//			       header("location:./take-assessment.php?id=$exam_id");
+//			} else {
 			$myname = "$myfname $mylname";
-			$recid = 'RS'.get_rand_numbers(14).'';
+			$recid = 'RS-'.mt_rand(100000,999999).'';
 			// record_id 	student_id 	student_name 	sem_sec 	usn 	exam_name 	exam_id 	score 	status 	c_ans 	f_ans 	skipped
 			//echo "<br>".$recid."<br>".$myid."<br>".$myname."<br>".$mysem."<br>".$usn."<br>".$exam_name."<br>".$exam_id;
 			//$sql = "INSERT INTO tbl_assessment_records (record_id, student_id, student_name, sem_sec, usn, exam_name, exam_id)
 			//VALUES ('$recid', '$myid', '$myname', '$mysem', '$usn', '$exam_name', '$exam_id')";
 
-			$sql = "INSERT INTO tbl_assessment_records (record_id, student_id, student_name,sem_sec, usn, exam_name, exam_id, score, status, c_ans, f_ans, skipped, total_question) VALUES ('$recid', '$myid', '$myname', '$mysem', '$usn', '$exam_name', '$exam_id', '0', 'FAIL', '0', '0', '0', '$t_question')";
+			// $sql = "INSERT INTO tbl_assessment_records (record_id, student_id, student_name,sem_sec, usn, exam_name, exam_id, score, status, c_ans, f_ans, skipped, total_question) VALUES ('$recid', '$myid', '$myname', '$mysem', '$usn', '$exam_name', '$exam_id', '0', 'FAIL', '0', '0', '0', '$t_question')";
+			$sql = "INSERT INTO tbl_assessment_records (record_id, student_id, student_name,sem_sec, batch, course, department, usn, email, exam_name, exam_id, score, exam_status, c_ans, f_ans, skipped, total_question) VALUES ('$recid', '$myid', '$myname', '$mysem', '$batch', '$course', '$department', '$usn', '$email', '$exam_name', '$exam_id', '0', 'FAIL', '0', '0', '0', '$t_question')";
+			if ($conn->query($sql) === TRUE) {?>
 
-			if ($conn->query($sql) === TRUE) {
-
-			} else {
-			mysqli_error($conn);
-			echo "not inserting";
-			}
-
-			}
-
-			?>
+			
 <!DOCTYPE html>
 <html>
 
@@ -98,7 +100,7 @@
 <meta name="description" content="Online Examination System" />
 <meta name="keywords" content="Online Examination System" />
 <meta name="author" content="Bwire Charles Mashauri" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
 <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
 <!-- <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/> -->
 <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -118,6 +120,7 @@
 <script src="../assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
 <script src="../assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
 
+
 <style>
 table {
 border-collapse: separate;
@@ -136,6 +139,12 @@ width: 1.1em;
 height: 1.1em;
 margin-right: 5px!important;
 }
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th, .table td {
+    padding: 0px!important;
+}
+	button{
+		
+	}
 
 
 
@@ -245,19 +254,14 @@ echo '<img src="data:image/jpeg;base64,'.base64_encode($myavatar).'" class="img-
 </a>
 </div>
 </div>
-<ul class="menu accordion-menu">
-<li><a href="./" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
-<li><a href="subject.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-file"></span><p>Subjects</p></a></li>
-<li><a href="students.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon glyphicon-user"></span><p>Students</p></a></li>
-<li><a href="examinations.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-book"></span><p>Examinations</p></a></li>
-<!-- <li><a href="results.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-certificate"></span><p>Exam Results</p></a></li>-->
-<li><a href="helps.php" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-modal-window"></span><p>Help</p></a></li>
-</ul>
+
 </div>
 
 	</div>
-  <div class="page-inner">
-<div class="page-title">
+  <div class="page-inner" >
+<div class="page-title " style = "height : 110px;" >
+<aside class="alert alert-danger" style = " border-width : 2px; width : 30%; height : 80px;float:right; margin-right : 2%;"><p   >DO NOT REFRESH THIS PAGE,Clicking on Back and Forward button is strictly prohibited. If you do so,you exam gets auto submitted.</p></aside>
+<aside class="alert alert-success" style = " border-width : 2px; width : 30%; height : 80px; float:right; margin-right : 2%;"><p   >The test auto submits so don't worry when time expires</p></aside>
 <h3>Examination</h3>
 <div class="page-breadcrumb">
 <ol class="breadcrumb">
@@ -265,91 +269,136 @@ echo '<img src="data:image/jpeg;base64,'.base64_encode($myavatar).'" class="img-
 <li><a href="examinations.php">Examinations</a></li>
 <li class="active"><?php echo "$exam_name"; ?></li> 
 </ol>
+<h3> </h3>
+
 </div>
 </div>
-<div><p class="alert alert-danger" style="text-align:center; margin:0!important">DO NOT REFRESH THIS PAGE, otherwise exam autosubmits regardless of whether you completed or not.</p></div>
-<div><p class="alert alert-success" style="text-align:center; margin:0!important">The test auto submits so don't worry when time expires</p></div>
+
 <div id="main-wrapper" style="margin-top:0!important">
 <div class="row">
 <div class="panel panel-white">
 <div class="panel-body">
-<div class="tabs-below" role="tabpanel" style=" width:60% ;float:left ;">
+<div class="tabs-below" role="tabpanel" style=" width:75% ;float:left ;">
 <form action="pages/submit_assessment.php" method="POST" name="quiz" id="quiz_form" >
 <div class="tab-content">
 <?php 
 include '../database/config.php';
 
+
 $sq = "SELECT t_question from tbl_examinations where exam_id = '$exam_id'";
 $res = $conn->query($sq);
-$num = 0;
+// $numTopic = 0;
 if($res){
 $val = $res->fetch_assoc();
 $num = $val['t_question'];
 }
-				
-$sql = "SELECT * FROM tbl_questions WHERE exam_id = '$exam_id' ORDER BY RAND() LIMIT $num";
+
+// $sql = "SELECT * FROM tbl_topic WHERE exam_id = '$exam_id'";
+
+// $result = $conn->query($sql);
+
+// if($result){
+// 	$numTopic = mysqli_num_rows($result);
+// 	$topics = array();
+// 	$top_que = array();
+// 	$i = 0;
+// 	while($row = mysqli_fetch_assoc($result)){
+// 		$topics[$i] =  $row['topic'];
+// 		$top_que[$i] = $row['num_q'];
+// 		$i++;
+// 	}
+// }
+
+
+$sql = "SELECT * FROM  tbl_exam_qb A, tbl_questions B WHERE A.qb_id  = B.qb_id AND A.exam_id = '$exam_id'  ORDER BY RAND() ";
+
+// $sq = "SELECT * FROM (SELECT * FROM  tbl_exam_qb A, tbl_questions B WHERE A.qb_id  = B.qb_id AND A.exam_id = '$exam_id') $char ";
+
+
+//$sql = "SELECT * FROM (SELECT * FROM  (SELECT * FROM ($sq) $char WHERE positive_mark = 1 ORDER BY RAND() LIMIT 15) z UNION SELECT * FROM (SELECT * FROM ($sq) $char WHERE positive_mark = 2 ORDER BY RAND() LIMIT 10) x UNION SELECT * FROM (SELECT * FROM ($sq) $char WHERE positive_mark = 5 ORDER BY RAND() LIMIT 3) y) z ORDER BY RAND()";																			
+																				
+//$sql = "SELECT * FROM tbl_questions WHERE exam_id = '$exam_id' ORDER BY RAND() LIMIT $num";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 $qno = 1;
 while($row = $result->fetch_assoc()) {
+	if($qno <= $t_question){
+		
 $qsid = $row['question_id'];
 $qs = $row['question'];
+
 $type = $row['type'];
+$difficulty = $row['difficulty'];
+// $topic = $row['topic'];
 $op1 = $row['option1'];
 $op2 = $row['option2'];
 $op3 = $row['option3'];
 $op4 = $row['option4'];
+$imgs = $row['img'];
 $posmarks = $row['positive_mark'];
 $neg = $row['negative_mark'];
 $ans = $row['answer'];
-                    
 $enan = $row[$ans];
 $cc = $row[0];
+if($difficulty == "easy" && $t_easy >0){
 if ($type == "FB") {
 if ($qno == "1") {
+	
 print '
-<div role="tabpanel" class="tab-pane active fade in" id="tab'.$qno.'"><script type="text/javascript">  mycolorsYellow(demo".$qno."); </script> 
-			<p><n style="font-size: 10pt;white-space:pre"><b>Marks:</b> '.(htmlentities($posmarks)).'<span></p><p><span style="font-size: 10pt;white-space:pre"><b>Question No: '.$qno.'<br></b> '.(htmlentities($qs)).'<span></p>
+<div role="tabpanel" class="tab-pane active fade in" id="tab'.$qno.'">
+			<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+			
+			<p style="overflow: auto"><span style="font-size: 15pt;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'<span></p>
             ';
               if( $imgs == NULL){ }else{
-              print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" width="250" alt="error" height="250" align="right"/>';
-              
+              print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;width:300px;height:300px"/></center>';
             }
 
 print '
 <p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')" class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+<a role="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
 
 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
 <input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
 <input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
 </div>
 ';	
 }else{
 print '
 <div role="tabpanel" class="tab-pane fade in" id="tab'.$qno.'">
-<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>
-<p><span style="font-size: 18pt;white-space:pre"><b>Marks:</b> '.(htmlentities($posmarks)).'<span></p>
-<p><span style="font-size: 10pt;white-space:pre"><b>Question No: '.$qno.'<br></b> '.(htmlentities($qs)).'</span></p>
+
+<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+
+<p style="overflow :auto"><span style="font-size: 15pt;overflow :auto;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'</span></p>
              ';
               if( $imgs == NULL){ }else{
-              print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" width="250" height="250" align="right"/>';
+              print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;width:300px;height:300px"/></center>';
               
             }
-echo '<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>' ;
 print '
 <p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')"  class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+<a role="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
 
 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
 <input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
 <input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
 </div>
 ';		
 }
 
-$qno = $qno + 1;	
+$qno = $qno + 1;
+$t_easy = $t_easy -1;
+
+$sql = "INSERT INTO tbl_report (user_id, exam_id, q_id,type, question, img, difficulty, option1, option2, option3, option4, positive_mark, negative_mark, answer, response, status, marks) VALUES ('$myid ', '$exam_id', '$qsid', '$type', '$qs', '$imgs', '$difficulty', '$op1','$op2','$op3','$op4', '$posmarks', '$neg', '$ans', '-', '-','-')";
+$conn->query($sql);
 }else{
 
 if ($qno == "1") {
@@ -357,32 +406,48 @@ $van = "tab'.$qno.'";
 print '
 
 <div role="tabpanel" class="amount_list active fade in" id="tab'.$qno.'">
-<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>
-<p><span style="font-size: 18pt;white-space:pre"><b>Marks:</b> '.(htmlentities($posmarks)).'<span></p>
-<p><span style="font-size: 10pt;white-space:pre"><b>Question No: '.$qno.'<br></b> '.(htmlentities($qs)).'</span></p>
+
+<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+
+<p style="overflow :auto"><span style="font-size:15pt;overflow :auto; white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'</span></p>
 <br>
-<br>
-<br>';
+';
 if( $imgs == NULL){ }else{
-print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" width="250" height="250" align="right"/>';
+print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;"/></center>';
 
 }
 
-echo '<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>' ;
+if(htmlentities($op1)!= '_')
 print '
 <p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+';
+if(htmlentities($op2)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+';
 
-<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+if(htmlentities($op3)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+';
 
-<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+if(htmlentities($op4)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+';
 
-<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
-<p><input type="button" value="Clear" onclick="Clear(<?=$qno?>)"></p>
+print '
+<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+<input type="button" style = "margin-left : 20px;" class = "btn btn-danger" value="Clear" onclick="Clear('.$qno.')">
+<a role="tab" style="margin-left : 20px; padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+
+
 
 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
 <input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
-<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($enan).'">
+<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
 </div>
 ';	
 }else{
@@ -392,87 +457,421 @@ $van = "tab'.$qno.'";
 
 print '
 <div role="tabpanel" class="amount_list fade in" id="tab'.$qno.'">
-<script type="text/javascript">  mycolorsYellow(demo".$qno."); </script>
-<p><span style="font-size: 18pt;white-space:pre"><b>Marks:</b> '.(htmlentities($posmarks)).'<span></p>
-<p><span style="font-size: 10pt;white-space:pre"><b>Question No: '.$qno.'<br></b> '.(htmlentities($qs)).'<span></p><br><br><br>
+
+<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+
+<p style="overflow: auto"><span style="font-size: 15pt;overflow: auto;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'<span></p><br>
 ';
 if( $imgs == NULL){ }else{
-print '<img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" width="250" height="250" align="right"/>';
+	
+print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;"/></center>';
 
 }
-echo '<script type="text/javascript">  mycolorsYellow(demo".$qno.");</script>' ;
 
+
+
+if(htmlentities($op1)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+';
+if(htmlentities($op2)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+';
+
+if(htmlentities($op3)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+';
+
+if(htmlentities($op4)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+';
 
 print '
-<p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
 
-<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
 
-<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span><label></p>
+<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+<input type="button" style = "margin-left : 20px;" class = "btn btn-danger" value="Clear" onclick="Clear('.$qno.')">
+<a role="tab" style="margin-left : 20px; padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
 
-<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')"/> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
-
-<p><input type="button" value="Clear" onclick="Clear(<?=$qno?>)"></p>
+<p></p>
 
 <input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
 <input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
 <input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
-<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($enan).'">
+<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
 </div>
 ';		
 }
 
-$qno = $qno + 1;	
+$qno = $qno + 1;
+$t_easy = $t_easy -1;	
 
-
+$sql = "INSERT INTO tbl_report (user_id, exam_id, q_id,type, question, img, difficulty, option1, option2, option3, option4, positive_mark, negative_mark, answer, response, status, marks) VALUES ('$myid ', '$exam_id', '$qsid', '$type', '$qs', '$imgs', '$difficulty', '$op1','$op2','$op3','$op4', '$posmarks', '$neg', '$ans', '-', '-','-')";
+$conn->query($sql);
 }
 
 }
-} else {
+if($difficulty == "medium" && $t_medium >0){
+	if ($type == "FB") {
+	if ($qno == "1") {
+	print '
+	<div role="tabpanel" class="tab-pane active fade in" id="tab'.$qno.'">
+				<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+				
+				<p style="overflow: auto"><span style="font-size: 15pt;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'<span></p>
+				';
+				  if( $imgs == NULL){ }else{
+				  print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;width:300px;height:300px"/></center>';
+				}
+	
+	print '
+	<p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')" class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+	<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+	<a role="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+	
+	<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+	<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+	<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+	<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+	<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+	</div>
+	';	
+	}else{
+	print '
+	<div role="tabpanel" class="tab-pane fade in" id="tab'.$qno.'">
+	
+	<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+	
+	<p style="overflow :auto"><span style="font-size: 15pt;overflow :auto;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'</span></p>
+				 ';
+				  if( $imgs == NULL){ }else{
+				  print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;width:300px;height:300px"/></center>';
+				  
+				}
+	print '
+	<p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')"  class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+	<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+	<a role="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+	
+	<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+	<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+	<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+	<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+	<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+	</div>
+	';		
+	}
+	
+	$qno = $qno + 1;
+	$t_medium = $t_medium -1;
+	
+	$sql = "INSERT INTO tbl_report (user_id, exam_id, q_id,type, question, img, difficulty, option1, option2, option3, option4, positive_mark, negative_mark, answer, response, status, marks) VALUES ('$myid ', '$exam_id', '$qsid', '$type', '$qs', '$imgs', '$difficulty', '$op1','$op2','$op3','$op4', '$posmarks', '$neg', '$ans', '-', '-','-')";
+	$conn->query($sql);
+	}else{
+	
+	if ($qno == "1") {
+	$van = "tab'.$qno.'";
+	print '
+	
+	<div role="tabpanel" class="amount_list active fade in" id="tab'.$qno.'">
+	
+	<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+	
+	<p style="overflow :auto"><span style="font-size:15pt;overflow :auto; white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'</span></p>
+	<br>
+	';
+	if( $imgs == NULL){ }else{
+	print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;"/></center>';
+	
+	}
+	
+	
+	if(htmlentities($op1)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+';
+if(htmlentities($op2)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+';
 
+if(htmlentities($op3)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+';
+
+if(htmlentities($op4)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+';
+
+print '
+	
+	<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+	<input type="button" style = "margin-left : 20px;" class = "btn btn-danger" value="Clear" onclick="Clear('.$qno.')">
+	<a role="tab" style="margin-left : 20px; padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+	
+	
+	
+	<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+	<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+	<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+	<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+	<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+	</div>
+	';	
+	}else{
+	$van = "tab'.$qno.'";
+	
+	
+	
+	print '
+	<div role="tabpanel" class="amount_list fade in" id="tab'.$qno.'">
+	
+	<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+	
+	<p style="overflow: auto"><span style="font-size: 15pt;overflow: auto;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'<span></p><br>
+	';
+	if( $imgs == NULL){ }else{
+		
+	print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;"/></center>';
+	
+	}
+	
+	
+	
+	if(htmlentities($op1)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+';
+if(htmlentities($op2)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+';
+
+if(htmlentities($op3)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+';
+
+if(htmlentities($op4)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+';
+
+print '
+	
+	
+	<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+	<input type="button" style = "margin-left : 20px;" class = "btn btn-danger" value="Clear" onclick="Clear('.$qno.')">
+	<a role="tab" style="margin-left : 20px; padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+	
+	<p></p>
+	
+	<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+	<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+	<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+	<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+	<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+	</div>
+	';		
+	}
+	
+	$qno = $qno + 1;
+	$t_medium = $t_medium -1;
+	
+	$sql = "INSERT INTO tbl_report (user_id, exam_id, q_id,type, question, img, difficulty, option1, option2, option3, option4, positive_mark, negative_mark, answer, response, status, marks) VALUES ('$myid ', '$exam_id', '$qsid', '$type', '$qs', '$imgs', '$difficulty', '$op1','$op2','$op3','$op4', '$posmarks', '$neg', '$ans', '-', '-','-')";
+	$conn->query($sql);
+	}
+	
+	}
+	if($difficulty == "hard" && $t_hard >0){
+		if ($type == "FB") {
+		if ($qno == "1") {
+		print '
+		<div role="tabpanel" class="tab-pane active fade in" id="tab'.$qno.'">
+					<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+					
+					<p style="overflow: auto"><span style="font-size: 15pt;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'<span></p>
+					';
+					  if( $imgs == NULL){ }else{
+					  print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;width:300px;height:300px"/></center>';
+					}
+		
+		print '
+		<p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')" class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+		<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+		<a role="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+		
+		<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+		<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+		<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+		<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+		<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+		</div>
+		';	
+		}else{
+		print '
+		<div role="tabpanel" class="tab-pane fade in" id="tab'.$qno.'">
+		
+		<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+		
+		<p style="overflow :auto"><span style="font-size: 15pt;overflow :auto;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'</span></p>
+					 ';
+					  if( $imgs == NULL){ }else{
+					  print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;width:300px;height:300px"/></center>';
+					  
+					}
+		print '
+		<p><input type="text" name="an'.$qno.'" onkeypress="mycolorss(demo'.$qno.')"  class="form-control" placeholder="Enter your answer" autocomplete="off"></p>
+		<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+		<a role="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+		
+		<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+		<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+		<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+		<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+		<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+		</div>
+		';		
+		}
+		
+		$qno = $qno + 1;
+		$t_hard = $t_hard -1;
+		
+		$sql = "INSERT INTO tbl_report (user_id, exam_id, q_id,type, question, img, difficulty, option1, option2, option3, option4, positive_mark, negative_mark, answer, response, status, marks) VALUES ('$myid ', '$exam_id', '$qsid', '$type', '$qs', '$imgs', '$difficulty', '$op1','$op2','$op3','$op4', '$posmarks', '$neg', '$ans', '-', '-','-')";
+		$conn->query($sql);
+		}else{
+		
+		if ($qno == "1") {
+		$van = "tab'.$qno.'";
+		print '
+		
+		<div role="tabpanel" class="amount_list active fade in" id="tab'.$qno.'">
+		
+		<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+		
+		<p style="overflow :auto"><span style="font-size:15pt;overflow :auto; white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'</span></p>
+		<br>
+		';
+		if( $imgs == NULL){ }else{
+		print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;"/></center>';
+		
+		}
+		
+		
+		if(htmlentities($op1)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+';
+if(htmlentities($op2)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+';
+
+if(htmlentities($op3)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+';
+
+if(htmlentities($op4)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+';
+
+print '
+		
+		<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+		<input type="button" style = "margin-left : 20px;" class = "btn btn-danger" value="Clear" onclick="Clear('.$qno.')">
+		<a role="tab" style="margin-left : 20px; padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+		
+		
+		
+		<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+		<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+		<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+		<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+		<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+		</div>
+		';	
+		}else{
+		$van = "tab'.$qno.'";
+		
+		
+		
+		print '
+		<div role="tabpanel" class="amount_list fade in" id="tab'.$qno.'">
+		
+		<p><span style="font-size: 10pt;white-space:pre">Marks: '.(htmlentities($posmarks)).'<span></p>
+		
+		<p style="overflow: auto"><span style="font-size: 15pt;overflow: auto;white-space:pre"><b>Question No: '.$qno.'<br><br></b> '.(htmlentities($qs)).'<span></p><br>
+		';
+		if( $imgs == NULL){ }else{
+			
+		print '<center><img src="data:image/jpeg;base64,'.base64_encode($imgs).'" class="img-responsive" alt="error" style="top:0px;"/></center>';
+		
+		}
+		
+		
+		
+		if(htmlentities($op1)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op1.'" class="form-control" value="'.$op1.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op1.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op1).'</span></label></p>
+';
+if(htmlentities($op2)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op2.'" class="form-control" value="'.$op2.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op2.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op2).'</span></label></p>
+';
+
+if(htmlentities($op3)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op3.'" class="form-control" value="'.$op3.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op3.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op3).'</span></label></p>
+';
+
+if(htmlentities($op4)!= '_')
+print '
+<p><input type="radio" name="an'.$qno.'" id="'.$op4.'" class="form-control" value="'.$op4.'" onclick="mycolorss(demo'.$qno.')" /> <label class="gift_amount" for="'.$op4.'"><span style="background-color:white; font-size: 10pt; padding-top: 6px; padding-right: 30px;padding-bottom: 8px; padding-left: 15px">'.htmlentities($op4).'</span></label></p>
+';
+
+print '
+		
+		<p><a role="tab"  href="#tab'.($qno-1).'"  onclick="check(demo'.($qno-1).')" data-toggle="tab" style="padding:10px;color:white;background-color:#22baa0; text-decoration:none ;"><i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>  Prev</a>
+		<input type="button" style = "margin-left : 20px;" class = "btn btn-danger" value="Clear" onclick="Clear('.$qno.')">
+		<a role="tab" style="margin-left : 20px; padding:10px;color:white;background-color:#22baa0; text-decoration:none ;" href="#tab'.($qno+1).'"  onclick="check(demo'.($qno+1).')" data-toggle="tab"> Next  <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a></p>
+		
+		<p></p>
+		
+		<input type="hidden" name="pos'.$qno.'" value="'.base64_encode($posmarks).'">
+		<input type="hidden" name="neg'.$qno.'" value="'.base64_encode($neg).'">
+		<input type="hidden" name="qst'.$qno.'" value="'.base64_encode($qs).'">
+		<input type="hidden" name="ran'.$qno.'" value="'.base64_encode($ans).'">
+		<input type="hidden" name="qqid'.$qno.'" value="'.base64_encode($qsid).'">
+		</div>
+		';		
+		}
+		
+		$qno = $qno + 1;	
+		$t_hard = $t_hard -1;
+		
+		$sql = "INSERT INTO tbl_report (user_id, exam_id, q_id,type, question, img, difficulty, option1, option2, option3, option4, positive_mark, negative_mark, answer, response, status, marks) VALUES ('$myid ', '$exam_id', '$qsid', '$type', '$qs', '$imgs', '$difficulty', '$op1','$op2','$op3','$op4', '$posmarks', '$neg', '$ans', '-', '-','-')";
+		$conn->query($sql);
+		}
+		
+		}
 }
+}} 
 
 ?>
 
 </div>
 
+<input type="hidden" name="tq" value="<?php echo "$t_question"; ?>">
+<input type="hidden" name="us" value="<?php echo "$myid"; ?>">
 
-
-<ul class="nav nav-tabs" role="tablist">
-<?php 
-include '../database/config.php';
-
-            
-$sql = "SELECT * FROM tbl_questions WHERE exam_id = '$exam_id' ORDER BY RAND() LIMIT $num ";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-$qno = 1;
-			$total_questions = 0;
-              
-while($row = $result->fetch_assoc()) {             
-			$total_questions++;
-			if ($qno == "1") {
-				if (isset($_POST["an'.$qno.'"])) {
-						$color = "green";
-				}
-				print '<li role="presentation" class="active" ><a id="demoz'.$qno.'" href="#tab'.$qno.'" role="tab"  data-toggle="tab" onclick="check(demo'.$qno.')">'.$qno.'</a></li>';	
-				}else{
-					if (isset($_POST["an'.$qno.'"])) {
-							$color = "green";
-					}
-					print '<li role="presentation" ><a id="demoz'.$qno.'" href="#tab'.$qno.'" role="tab"   data-toggle="tab" onclick="check(demo'.$qno.')">'.$qno.'</a></li>';		
-					}
-
-			$qno = $qno + 1;
-
-}
-} else {
-
-}
-
-?>
-<input type="hidden" name="tq" value="<?php echo "$total_questions"; ?>">
 <input type="hidden" name="eid" value="<?php echo "$exam_id"; ?>">
 <input type="hidden" name="pm" value="<?php echo "$passmark"; ?>">
 <input type="hidden" name="ttm" value="<?php echo "$t_mark"; ?>">
@@ -480,16 +879,17 @@ while($row = $result->fetch_assoc()) {
 <input type="hidden" name="ri" value="<?php echo "$recid"; ?>">
 <input type="hidden" name="pre" value="<?php echo "$pre"; ?>">
 
-</ul>
+<!--</ul>-->
 
 <input type="hidden" name="formid" value="<?php echo htmlspecialchars($_SESSION["current_examid"]); ?>" />
 
 <br>
 
-<input id="btn"  class="btn btn-success" type="submit" value="Submit Assessment" CssClass="noprompt-required" AutoPostBack="true">
+<input id="btn"  style = "margin-left :300px;"class="btn btn-danger" type="submit" onclick="Submit()" value="End Exam" CssClass="noprompt-required" AutoPostBack="true">
+
 
 </div> 
-<aside style="float:right;top:-120px ;padding-right:5px ;margin-top:20px ; overflow: scroll; height:500px ;">
+<aside style="float:right;top:-120px ;padding-right:5px ;margin-top:20px ; overflow: auto; height:500px ;">
 <div style="margin:5px ;">
 
 <p>Attempted Questions : <span style="background-color:#4BB543 ;margin:5px ;width:30px ;height:30px ;color:#4BB543 ;border:1px solid black ;">***</span></p> 
@@ -510,16 +910,16 @@ $j =1 ;
 for($i=1;$i<=$num/3;$i++)
 {
 
-echo "<tr style='width:2px ; height:2px ;'>";
+echo "<tr>";
 for($j=1;$j<=3;$j++)
 {
 
 if($counter==1){
-print '<td style=" width:10px ; height:10px ;background-color: #ffcc00" id="demo'.$counter.'" >'.$counter.'</td>';	
+print '<td><a id="demoz'.$counter.'" href="#tab'.$counter.'" role="tab"  data-toggle="tab" onclick="check(demo'.$counter.')"><button style="background-color: #ffcc00;width:100%;border:none;" id="demo'.$counter.'" >'.$counter.'</button></a></td>';	
 $counter=$counter+1 ;
 }
 else {
-print '<td style="width: 10px ; height : 10px ;"  id="demo'.$counter.'" >'.$counter.'</td>';	
+print '<td><a id="demoz'.$counter.'" href="#tab'.$counter.'" role="tab"  data-toggle="tab" onclick="check(demo'.$counter.')"><button id="demo'.$counter.'" style="width:100%;border:none;background-color:white;">'.$counter.'</button></a></td>';	
 
 $counter=$counter+1 ;
 }
@@ -530,13 +930,13 @@ echo "</tr>";
 
 }
 
-if($num%3 !=0){
-$extra=$total_questions%3 ;
+if($num%3 !== 0){
+$extra=$num%3 ;
 echo "<tr>";
 for($j=1;$j<=$extra;$j++)
 {
 
-print '<td style="width: 10px ; height : 10px ;" id="demo'.$counter.'" >'.$counter.'</td>';	
+print '<td><a id="demoz'.$counter.'" href="#tab'.$counter.'" role="tab"  data-toggle="tab" onclick="check(demo'.$counter.')"><button  id="demo'.$counter.'" style="width:100%;border:none;background-color:white;" >'.$counter.'</button></a></td>';	
 $counter=$counter+1 ;
 }
 
@@ -577,6 +977,7 @@ $cc1 = $cc1 + 1;
 }else{
 
 }
+
 ?>
 <div class="cd-overlay"></div>
 
@@ -604,7 +1005,7 @@ function mycolorss(id) {
 
 idArray.push(id) ;
 
-id.setAttribute("style","background-color:#4BB543; color:black;color:white;");
+id.setAttribute("style","background-color:#4BB543; color:black;color:white;width:100%;border:none;height:100%;");
 }
 
 function check(id) {
@@ -613,26 +1014,33 @@ function check(id) {
 console.log(idArray.indexOf(id)) ;
 
 if(idArray.indexOf(id)==-1){
-id.setAttribute("style","background-color:#ffcc00; color:black; width: 2px ; height : 2px ;");
+id.setAttribute("style","background-color:#ffcc00; color:black;width:100%;border:none;height:100%;");
 }
 else{
-id.setAttribute("style","background-color:#4BB543;color:white;width: 10px ; height : 10px ;");
+id.setAttribute("style","background-color:#4BB543;color:white;width:100%;border:none;height:100%;");
 }
 }
+
+function Submit(){
+	console.log('Submitt');
+	localStorage.removeItem("total_seconds");
+}
+
+
 
 function Clear(inp){
 	//console.log(inp)
 	var name = "an"+inp;
 	var id = "demo"+inp;
-	var ID = document.getElementById(id).setAttribute("style","background-color:#ffcc00; color:black;");
+	var ID = document.getElementById(id).setAttribute("style","background-color:#ffcc00; color:black; width:100%; border:none;height:100%; ");
 	document.querySelector('input[name='+name+']:checked').checked = false;
 }
 
-</script>
 
 
 
-<script type="text/javascript">
+
+
 var btn = document.getElementById('btn'),
 clicked = false;
 
@@ -646,10 +1054,6 @@ return 'If you resubmit this page, progress will be lost.';
 }
 }
 	
-//document.getElementById("quiz_form").onsubmit = function(e){
-//			window.onbeforeunload = null;
-//      return true;
-//		}
 </script>
 
 <script>
@@ -688,12 +1092,11 @@ if ((e.which || e.keyCode) == 116)
 e.preventDefault();
 }
 }
-
+var subbutton = false;
 $(document).ready(function(){
 $(document).bind("keydown", disable_f5);    
 });
 //playing starts here
-var subbutton = false;
 $('#btn').click(function(){
 if(!subbutton){
 
@@ -744,27 +1147,38 @@ return confirm(c3 + " Questions Are Not Answered \n\nAre you sure you want to su
 <script type="text/javascript">
 var max_time = <?php echo "$duration" ?>;
 var c_seconds  = 0;
-var total_seconds =60*max_time;
+
+if(localStorage.getItem("total_seconds")){
+    var total_seconds = localStorage.getItem("total_seconds");
+} else {
+    var total_seconds = 60*max_time;
+}
 max_time = parseInt(total_seconds/60);
 c_seconds = parseInt(total_seconds%60);
 document.getElementById("quiz-time-left").innerHTML='' + max_time + ':' + c_seconds + 'Min';
-function init(){
-document.getElementById("quiz-time-left").innerHTML='' + max_time + ':' + c_seconds + ' Min';
-setTimeout("CheckTime()",999);
-}
-function CheckTime(){
-document.getElementById("quiz-time-left").innerHTML='' + max_time + ':' + c_seconds + ' Min' ;
-if(total_seconds <=0){
-subbutton = true;
-setTimeout('document.quiz.submit()',1);
-
-} else
+function init()
 {
-total_seconds = total_seconds -1;
-max_time = parseInt(total_seconds/60);
-c_seconds = parseInt(total_seconds%60);
-setTimeout("CheckTime()",999);
+	document.getElementById("quiz-time-left").innerHTML='' + max_time + ':' + c_seconds + ' Min';
+	setTimeout("CheckTime()",999);
 }
+function CheckTime()
+{
+	document.getElementById("quiz-time-left").innerHTML='' + max_time + ':' + c_seconds + ' Min' ;
+	if(total_seconds <=0)
+	{
+		subbutton = true;
+		delete localStorage.total_seconds
+		window.onbeforeunload = null;
+		setTimeout('document.quiz.submit()', 1);
+	} 
+	else
+	{
+		total_seconds = total_seconds -1;
+		max_time = parseInt(total_seconds/60);
+		c_seconds = parseInt(total_seconds%60);
+		localStorage.setItem("total_seconds",total_seconds)
+		setTimeout("CheckTime()",999);
+	}
 
 }
 init();
@@ -772,4 +1186,11 @@ init();
 
 </body>
 
+
 </html>
+<?php } else {
+			header("location:./take-assessment.php?id=$exam_id");
+			
+			}
+			$conn->close();
+?>

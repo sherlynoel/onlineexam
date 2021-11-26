@@ -27,8 +27,7 @@
 
         
     </head>
-     <body>
-        <div class="limiter">
+<body <?php if ($ms == "1") { print 'onload="myFunction()"'; } ?>  class="page-header-fixed">        <div class="limiter">
             
                <div class="container-login100">
                   
@@ -43,17 +42,19 @@
                                
                                
                                 <form class="login100-form validate-form" action="pages/reset_account.php" method="POST">
-                                     <span class="login100-form-title">Please enter your registration number or email.</span>
+                                	<b style="color:green" class="login100-form-title">RESET PASSWORD</b>
+                                     <span class="login100-form-title">
+                                     Please enter your registered CMRIT email ID.</span>
                                    
                                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                                        <input type="text" class="input100" placeholder="Email or Registration No."  autocomplete="off" name="user" required>
+                                        <input type="text" class="input100" placeholder="CMRIT Email ID"  autocomplete="off" name="user" required>
                                     <span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
 					</div>
                                      <div class="container-login100-form-btn">
-                                         <button type="submit" class="login100-form-btn">Send me new password</button><br>
+                                         <button type="submit" class="login100-form-btn">Set new password</button><br>
                                          <br><a href="./" class="txt2">Access my account</a>
                                      </div>
                                 </form>
@@ -82,6 +83,12 @@
 	</script>
 <!--===============================================================================================-->
 	<script src="assets/js/main_1.js"></script>
+	<script>
+function myFunction() {
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
       
     </body>
 

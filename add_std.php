@@ -2,72 +2,76 @@
 date_default_timezone_set('Africa/Dar_es_salaam');
 include 'database/config.php';
 include 'includes/uniques.php';
-$student_id = 'S'.get_rand_numbers(3).'-'.get_rand_numbers(3).'-'.get_rand_numbers(3).'';
+$student_id = 'S'.mt_rand(100,999).'-'.mt_rand(100,999).'-'.mt_rand(100,999).'';
 $fname = ucwords(mysqli_real_escape_string($conn, $_POST['fname']));
 $lname = ucwords(mysqli_real_escape_string($conn, $_POST['lname']));
 $sem = mysqli_real_escape_string($conn, $_POST['sem']);
-$sec = strtoupper(mysqli_real_escape_string($conn, $_POST['sec']));
+$sec = mysqli_real_escape_string($conn, $_POST['sec']);
+$usn = mysqli_real_escape_string($conn, $_POST['usn']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
 $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+$dob = mysqli_real_escape_string($conn, $_POST['dob']);
 $pass = mysqli_real_escape_string($conn, $_POST['pass']);
 $repass = mysqli_real_escape_string($conn, $_POST['repass']);
 $department = mysqli_real_escape_string($conn, $_POST['department']);
-
-
-$dob = mysqli_real_escape_string($conn, $_POST['dob']);
 $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+$batch = mysqli_real_escape_string($conn, $_POST['batch']);
+$course = mysqli_real_escape_string($conn, $_POST['course']);
+// $role = mysqli_real_escape_string($conn, $_POST['role']);
+$semSection=$sem."-".$sec ;
+echo $student_id."<br>".$fname."<br>".$lname."<br>".$sem."<br>".$email."<br>".$phone."<br>".$pass."<br>".$repass."<br>".$department."<br>".$sec."<br>".$gender."<br>".$semSection."<br>" ;
 
-if ($pass != $repass)
-{
-echo "<script type='text/javascript'>alert('password not matched!');
-window.location.href='registers.php';
-</script>";
-}
-else
-{
-$sql = "SELECT * FROM tbl_users WHERE email = '$email' OR phone = '$phone'";
+//if ($pass != $repass)
+//{
+//echo "<script type='text/javascript'>alert('password not matched!');
+//window.location.href='registers.php';
+//</script>";
+//}
+//else
+//{
+$sql = "SELECT * FROM tbl_users WHERE email = '$email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 
     while($row = $result->fetch_assoc()) {
     $sem = $row['email'];
-	$sph = $row['phone'];
 	if ($sem == $email) {
-	 header("location:.index.php.php?rp=1189");	
-	}else{
-	
-	if ($sph == $phone) {
-	 header("location:.index.php.php?rp=2074");	
-	}else{
-		
-	}
-	
+        header("location:registers.php?rp=1189");
+	 
 	}
 	
     }
 } else {
 
-$sql = "INSERT INTO tbl_users (user_id, first_name, last_name, gender, dob, email, sem_sec, usn, phone, department)
-VALUES ('$student_id', '$fname', '$lname', '$gender', '$dob', '$email', '$sem', '$sec', '$phone', '$department')";
+       $new_password = md5($_POST['pass']);
 
-if ($conn->query($sql) === TRUE) {
-  header("location:../students.php?rp=6310");
-} else {
-  header("location:../students.php?rp=9157");
+        $mysql = "INSERT INTO tbl_users (user_id, first_name, last_name, gender,  email, sem_sec, usn, department, phone,dob, batch, course, login ,role)
+        VALUES ('$student_id', '$fname', '$lname', '$gender', '$email', '$semSection', '$usn', '$department','$phone', '$dob','$batch', '$course','$new_password','student')";
+
+        if ($conn->query($mysql) === TRUE) 
+
+        { 
+          
+	           header("location:index.php?rp=6310");
+					
+        }
+
+        else {
+//             echo "<script type='text/javascript'>alert('Connection Failed, Register Again !!');
+//                        window.location.href='registers.php';
+//                        </script>";
+					header("location:index.php?rp=9157");
+
+        }
+
+
 }
 
 
-}
-$new_password = md5($_POST['pass']);
 
-$sql = "UPDATE tbl_users SET login='$new_password' WHERE user_id='$student_id '";
+//}
 
-if ($conn->query($sql) === TRUE) {
-	header("location:index.php?rp=7823");
-} else {
-   header("location:.index.php?rp=1298");
-}
-}
+
 $conn->close();
 ?>

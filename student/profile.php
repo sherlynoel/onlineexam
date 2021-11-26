@@ -1,6 +1,16 @@
 <?php include 'includes/check_user.php';
 include 'includes/check_reply.php';
 $qrcodetxt = 'ID:'.$myid.', NAME: '.$myfname.' '.$mylname.', GENDER: '.$mygender.', DEPARTMENT : '.$mydepartment.', CATEGORY : '.$mycategory.'';
+$sql = "SELECT * FROM tbl_users WHERE user_id = '$myid'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+
+    while($row = $result->fetch_assoc()) {
+    $resume = $row['resume'];
+    $dob = $row['dob'];
+    }
+}
 
 
  ?>
@@ -9,15 +19,15 @@ $qrcodetxt = 'ID:'.$myid.', NAME: '.$myfname.' '.$mylname.', GENDER: '.$mygender
     
 <head>
         
-        <title>GATE | Student Profile</title>
+        <title>CSE EXAM TOOL | Student Profile</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
         <meta name="description" content="Online Examination System" />
         <meta name="keywords" content="Online Examination System" />
-        <meta name="author" content="Bwire Charles Mashauri" />
+        <meta name="author" content="Sherly Noel" />
         
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'> -->
         <link href="../assets/plugins/pace-master/themes/blue/pace-theme-flash.css" rel="stylesheet"/>
         <link href="../assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -199,33 +209,28 @@ $qrcodetxt = 'ID:'.$myid.', NAME: '.$myfname.' '.$mylname.', GENDER: '.$mygender
                                                 <td><b><?php echo "$mygender"; ?></b></td>
                                                
                                             </tr>
+										
+											
 											<tr>
                                                 <th scope="row">5</th>
-                                                <td>Date of birth</td>
-                                                <td><b><?php echo "$mydob"; ?></b></td>
-                                               
-                                            </tr>
-											<tr>
-                                                <th scope="row">6</th>
-                                                <td>Address</td>
-                                                <td><b><?php echo "$myaddress"; ?></b></td>
-                                          
-                                               
-                                            </tr>
-											<tr>
-                                                <th scope="row">7</th>
                                                 <td>Email Address</td>
                                                 <td><b><?php echo "$myemail"; ?></b></td>
                                                
                                             </tr>
 											<tr>
-                                                <th scope="row">8</th>
+                                                <th scope="row">6</th>
                                                 <td>Phone Number</td>
                                                 <td><b><?php echo "$myphone"; ?></b></td>
                                                
                                             </tr>
+                                            <tr>
+                                                <th scope="row">6</th>
+                                                <td>Date of Birth</td>
+                                                <td><b><?php echo "$mydob"; ?></b></td>
+                                               
+                                            </tr>
 											<tr>
-                                                <th scope="row">9</th>
+                                                <th scope="row">7</th>
                                                 <td>Department</td>
                                                 <td><b><?php echo "$mydepartment"; ?></b></td>
                                                
@@ -259,7 +264,22 @@ $qrcodetxt = 'ID:'.$myid.', NAME: '.$myfname.' '.$mylname.', GENDER: '.$mygender
 								</form>
 									
                              </div></div></div>
-							 
+							 <div class="col-md-7">
+
+                                <div class="panel panel-white">
+                                    <div class="panel-body">
+                                    <h3>Add Resume drive link</h3>
+                                <form action="pages/new_resume.php" method="post" role="form" enctype="multipart/form-data">
+                                <div class="form-group">
+                               <label for="exampleInputEmail1">Upload Resume in a folder, add it to Google drive and paste link here:</label><br>
+                                <input type="text" class="form-control" name="resume" value="<?php echo "$myresume"; ?>"id="resume"/>
+                                </div>
+                                <button id="send" type="submit" name="submit" class="btn btn-primary">Upload</button>
+                                <a href="<?php echo $myresume; ?>">Click to View Resume</a>
+                                
+                                
+                                    </form>
+                             </div></div></div>
 							 
 							 	<div class="col-md-7">
 

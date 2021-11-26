@@ -1,32 +1,34 @@
 <?php 
 include 'includes/check_user.php'; 
 include 'includes/check_reply.php';
-if (isset($_GET['eid'])) {
-include '../database/config.php';
-$exam_id = mysqli_real_escape_string($conn, $_GET['eid']);
-$sql = "SELECT * FROM tbl_examinations WHERE exam_id = '$exam_id'";
+
+if (isset($_GET['sid'])) {
+	include '../database/config.php';
+	$student_id = mysqli_real_escape_string($conn, $_GET['sid']);
+	$sql = "SELECT * FROM tbl_users WHERE user_id = '$student_id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 
     while($row = $result->fetch_assoc()) {
-     $excate = $row['category'];
-	 $exsubject = $row['subject'];
-	 $exname = $row['exam_name'];
-	 $exdate = $row['date'];
-	 $exduration = $row['duration'];
-	 $expassmark = $row['passmark'];
-	 $extmark = $row['t_mark'];
-	 //$exemark = $row['e_mark'];
-	 $t_question = $row['t_question'];
-	 $exreex = $row['re_exam'];
-	 $exterms = $row['terms'];
-	 //$pre = $row['pret'];
+	$sdfname = $row['first_name'];
+	$sdlname = $row['last_name'];
+	$sdgender = $row['gender'];
+	$sddob = $row['dob'];
+	$sdaddress = $row['address'];
+	$sdemail = $row['email'];
+	$sdphone = $row['phone'];
+	$sddepartment = $row['department'];
+	$sdcategory = $row['category'];
+	$sdavatar = $row['avatar'];
+	$sdstat = $row['acc_stat'];
+	$qrcodetxt = 'ID:'.$student_id.', NAME: '.$sdfname.' '.$sdlname.', GENDER: '.$sdgender.', DEPARTMENT : '.$sddepartment.', CATEGORY : '.$sdcategory.'';
+
     }
 } else {
     header("location:./");
 }
-$conn->close();	
+	
 }else{
 	header("location:./");
 }
@@ -36,7 +38,7 @@ $conn->close();
    
 <head>
         
-        <title>GATE | Edit Exam</title>
+        <title>GATE | View Student</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
@@ -197,7 +199,7 @@ $conn->close();
             </div>
             <div class="page-inner">
                 <div class="page-title">
-                    <h3>Edit Exam - <?php echo "$exname"; ?></h3>
+                    <h3>View Student - <?php echo "$sdfname"; ?> <?php echo "$sdlname"; ?></h3>
 
 
 
@@ -206,81 +208,144 @@ $conn->close();
                     <div class="row">
                         <div class="col-md-12">
 						<div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-5">
 
                                 <div class="panel panel-white">
                                     <div class="panel-body">
-                                         <form action="pages/update_exam.php" method="POST">
-										<div class="form-group">
-                                            <label for="exampleInputEmail1">Exam Name</label>
-                                            <input type="text" class="form-control" value="<?php echo"$exname"; ?>" placeholder="Enter exam name" name="exam" required autocomplete="off">
-                                        </div>
-										<div class="form-group">
-                                            <label for="exampleInputEmail1">Exam Duration (Minutes)</label>
-                                            <input type="number" class="form-control" value="<?php echo"$exduration"; ?>" placeholder="Enter exam duration" name="duration" required autocomplete="off">
-                                        </div>
-										<div class="form-group">
-                                            <label for="exampleInputEmail1">Pass Percentage </label>
-                                            <input type="number" class="form-control" value="<?php echo"$expassmark"; ?>" placeholder="Enter passmark" name="passmark" required autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">totalmark </label>
-                                            <input type="number" class="form-control" value="<?php echo"$extmark"; ?>" placeholder="Enter passmark" name="t_mark" required autocomplete="off">
-                                        </div>
-                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">total question </label>
-                                            <input type="number" class="form-control" value="<?php echo"$t_question"; ?>" placeholder="Enter passmark" name="t_question" required autocomplete="off">
-                                        </div>
-<!--
-                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">percentage(%)</label>
-                                            <input type="number" class="form-control" value="" placeholder="Enter percentage" name="pre" required autocomplete="off">
-                                        </div>
--->
-										
-										
-										
-										<div class="form-group">
-                                            <label for="exampleInputEmail1">Select Subjects</label>
-                                            <select class="form-control" name="category" required>
-											<option value="" selected disabled>-Select Subjects-</option>
-											<?php
-											include '../database/config.php';
-											$sql = "SELECT * FROM tbl_categories WHERE status = 'Active' ORDER BY name";
-                                            $result = $conn->query($sql);
-
-                                            if ($result->num_rows > 0) {
-    
-                                            while($row = $result->fetch_assoc()) {
-                                          	if ($excate == $row['name']) {
-											print '<option selected value="'.$row['name'].'">'.$row['name'].'</option>';	
-											}else{
-											print '<option value="'.$row['name'].'">'.$row['name'].'</option>';	
-											}
-                                            }
-                                           } else {
-                          
-                                            }
-                                             $conn->close();
-											 ?>
-											
-											</select>
-                                        </div>
-									
-									
-									<div class="form-group">
-                                            <label for="exampleInputEmail1">Terms and conditions</label>
-                                            <textarea style="resize: none;" rows="6" class="form-control" placeholder="Enter Terms and conditions" name="instructions" required autocomplete="off"><?php echo"$exterms"; ?></textarea>
-                                     </div>
-									 <input type="hidden" name="examid" value="<?php echo "$exam_id"; ?>">
-
-
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                       </form>
+									<div class="col-md-6">
+                                <?php 
+						        if ($sdavatar == NULL) {
+						        print' <img class="img-responsive" src="../assets/images/'.$sdgender.'.png" alt="'.$sdfname.'">';
+						        }else{
+						        echo '<img src="data:image/jpeg;base64,'.base64_encode($sdavatar).'" class="img-responsive"  alt="'.$sdfname.'"/>';	
+						        }
+						
+						        ?></div>
+								<div class="col-md-6">
+						        <?php print '<img width="150" src="../assets/qrcode/qr_img.php?d='.$qrcodetxt.'">'; ?>
+						        </div>
+								
                                     </div>
+									<table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Registration Number</td>
+                                                <td><b><?php echo "$student_id"; ?></b></td>
+                                             
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>First Name</td>
+                                                <td><b><?php echo "$sdfname"; ?></b></td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>Last Name</td>
+                                                <td><b><?php echo "$sdlname"; ?></b></td>
+                                               
+                                            </tr>
+											<tr>
+                                                <th scope="row">4</th>
+                                                <td>Gender</td>
+                                                <td><b><?php echo "$sdgender"; ?></b></td>
+                                               
+                                            </tr>
+											<tr>
+                                                <th scope="row">5</th>
+                                                <td>Date of birth</td>
+                                                <td><b><?php echo "$sddob"; ?></b></td>
+                                               
+                                            </tr>
+											
+											<tr>
+                                                <th scope="row">7</th>
+                                                <td>Email Address</td>
+                                                <td><b><?php echo "$sdemail"; ?></b></td>
+                                               
+                                            </tr>
+											<tr>
+                                                <th scope="row">8</th>
+                                                <td>Phone Number</td>
+                                                <td><b><?php echo "$sdphone"; ?></b></td>
+                                               
+                                            </tr>
+											<tr>
+                                                <th scope="row">9</th>
+                                                <td>Department</td>
+                                                <td><b><?php echo "$sddepartment"; ?></b></td>
+                                               
+                                            </tr>
+											
+                                        </tbody>
+                                    </table>
                                 </div>  
   
                             </div>
+							
+							<div class="col-md-7">
+
+                                <div class="panel panel-white">
+                                    <div class="panel-body">
+									<h3><?php echo "$sdfname"; ?> has attempt the following exam(s) so far</h3>
+									 <div class="table-responsive">
+									 <?php
+									 include '../database/config.php';
+									 $sql = "SELECT * FROM tbl_assessment_records WHERE student_id = '$student_id'";
+                                     $result = $conn->query($sql);
+
+                                     if ($result->num_rows > 0) {
+									print '
+									   <table id="example" class="display table" style="width: 100%; cellspacing: 0;">
+                                        <thead>
+                                            <tr>
+                                                <th>Exam</th>
+                                                <th>Date</th>
+                                                <th>Score</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Exam</th>
+                                                <th>Date</th>
+                                                <th>Score</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>';
+ 
+                                     while($row = $result->fetch_assoc()) {
+                                     print '
+									        <tr>
+                                                <td>'.$row['exam_name'].'</td>
+                                                <td>'.$row['date'].'</td>
+                                                <td>'.$row['score'].'%</td>
+                                                <td>'.$row['status'].'</td>
+                                            </tr>';
+                                     }
+									 print '
+									   </tbody>
+                                       </table>  ';
+                                     } else {
+     												print '
+												<div class="alert alert-info" role="alert">
+                                        Nothing was found in database.
+                                    </div>';
+                                     }
+                                     $conn->close();
+									 
+									 ?>
+
+
+                                          
+  
+                                    </div>
+									
+                             </div></div></div>
+							
+							
                         </div>
 
 
